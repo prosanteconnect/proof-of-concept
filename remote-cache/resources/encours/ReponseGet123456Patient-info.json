@@ -1,0 +1,17 @@
+{
+    "bag": {
+        "ps": {
+            "nationalId": "899700218896",
+            "professionalFirstName": "myFirstName",
+            "professionCode": "999"
+        },
+        "patient": {
+            "patientINS": "myINS",
+            "patientFirstName": "myFisrtName",
+            "patientLastName": "myLastName",
+            "patientDOB": "DOB"
+        }
+    },
+    "key": "123456",
+    "schemaId": "patient-info"
+}
