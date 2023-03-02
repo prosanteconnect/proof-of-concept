@@ -35,7 +35,20 @@
         "scope": {"type":"string"},
 		"sid": {"type":"string"},
 		"authMode": {"type":"string"},
-		"otherIds": {"type":"object"},
+		"otherIds": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "identifiant": {"type":"string"},
+                "origine": {"type":"string"},
+                "qualite":{"type":"integer"}
+              },
+              "required":["identifiant","origine","qualite"]
+            }
+          ]
+        },
         "client_id": {"type":"string"},
         "username":{"type":"string"},
 	    "active": {"allOf":[{"type":"boolean"},{"enum": [true]}]} 
@@ -306,7 +319,7 @@
         "SubjectNameID": {"type":"string"},
         "family_name": {"type":"string"}
       },
-      "required": ["Secteur_Activite","sub","email_verified","SubjectOrganization","Mode_Acces_Raison","preferred_username","given_name","Acces_Regulation_Medicale","UITVersion","Palier_Authentification","SubjectRefPro","SubjectOrganizationID","SubjectRole","PSI_Locale","otherIds","SubjectNameID","family_name"]
+      "required": ["Secteur_Activite","sub","SubjectOrganization","Mode_Acces_Raison","preferred_username","given_name","Acces_Regulation_Medicale","UITVersion","Palier_Authentification","SubjectRefPro","SubjectOrganizationID","SubjectRole","PSI_Locale","otherIds","SubjectNameID","family_name"]
     }
 	}
 }
