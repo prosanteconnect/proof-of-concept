@@ -6,7 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
 // default TimeUnit is seconds
-@RedisHash(value = "DataWrapper", timeToLive = 900)
+@RedisHash(value = "DataWrapper", timeToLive = 900) //timeToLive: Time before expire in seconds.
 public class DataWrapper {
     @Id
     @JsonProperty("key")
