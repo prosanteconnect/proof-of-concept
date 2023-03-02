@@ -123,9 +123,9 @@
                             "adresseEMail": {"type":"string"},
                             "codeDepartement": {"type":"string"},
                             "ancienIdentifiantDeLaStructure": {"type":"string"},
-                            "autoriteDenregistrement": {"type":"string"},
+                            "autoriteDenregistrement": {"type":"string"}
                           },
-                          "required": ["codeModeExercice","codeSecteurDactivite","codeSectionPharmacien","codeRole","codeGenreActivite","numeroSiretSite","numeroSirenSite","numeroFinessSite","numeroFinessetablissementJuridique","identifiantTechniqueDeLaStructure","raisonSocialeSite","enseigneCommercialeSite","complementDestinataire","complementPointGeographique","numeroVoie","indiceRepetitionVoie","codeTypeDeVoie","libelleVoie","mentionDistribution","bureauCedex","codePostal","codeCommune","codePays","telephone","telephone2","telecopie","adresseEMail","codeDepartement","ancienIdentifiantDeLaStructure","autoriteDenregistrement"],
+                          "required": ["codeModeExercice","codeSecteurDactivite","codeSectionPharmacien","codeRole","codeGenreActivite","numeroSiretSite","numeroSirenSite","numeroFinessSite","numeroFinessetablissementJuridique","identifiantTechniqueDeLaStructure","raisonSocialeSite","enseigneCommercialeSite","complementDestinataire","complementPointGeographique","numeroVoie","indiceRepetitionVoie","codeTypeDeVoie","libelleVoie","mentionDistribution","bureauCedex","codePostal","codeCommune","codePays","telephone","telephone2","telecopie","adresseEMail","codeDepartement","ancienIdentifiantDeLaStructure","autoriteDenregistrement"]
                         },
                         {
                           "type": "object",
@@ -159,7 +159,7 @@
                             "adresseEMail": {"type":"string"},
                             "codeDepartement": {"type":"string"},
                             "ancienIdentifiantDeLaStructure": {"type":"string"},
-                            "autoriteDenregistrement": {"type":"string"},
+                            "autoriteDenregistrement": {"type":"string"}
                           },
                           "required": ["codeModeExercice","codeSecteurDactivite","codeSectionPharmacien","codeRole","codeGenreActivite","numeroSiretSite","numeroSirenSite","numeroFinessSite","numeroFinessetablissementJuridique","identifiantTechniqueDeLaStructure","raisonSocialeSite","enseigneCommercialeSite","complementDestinataire","complementPointGeographique","numeroVoie","indiceRepetitionVoie","codeTypeDeVoie","libelleVoie","mentionDistribution","bureauCedex","codePostal","codeCommune","codePays","telephone","telephone2","telecopie","adresseEMail","codeDepartement","ancienIdentifiantDeLaStructure","autoriteDenregistrement"]
                         },
@@ -195,7 +195,7 @@
                             "adresseEMail": {"type":"string"},
                             "codeDepartement": {"type":"string"},
                             "ancienIdentifiantDeLaStructure": {"type":"string"},
-                            "autoriteDenregistrement": {"type":"string"},
+                            "autoriteDenregistrement": {"type":"string"}
                           },
                           "required": ["codeModeExercice","codeSecteurDactivite","codeSectionPharmacien","codeRole","codeGenreActivite","numeroSiretSite","numeroSirenSite","numeroFinessSite","numeroFinessetablissementJuridique","identifiantTechniqueDeLaStructure","raisonSocialeSite","enseigneCommercialeSite","complementDestinataire","complementPointGeographique","numeroVoie","indiceRepetitionVoie","codeTypeDeVoie","libelleVoie","mentionDistribution","bureauCedex","codePostal","codeCommune","codePays","telephone","telephone2","telecopie","adresseEMail","codeDepartement","ancienIdentifiantDeLaStructure","autoriteDenregistrement"]
                         },
@@ -231,7 +231,7 @@
                             "adresseEMail": {"type":"string"},
                             "codeDepartement": {"type":"string"},
                             "ancienIdentifiantDeLaStructure": {"type":"string"},
-                            "autoriteDenregistrement": {"type":"string"},
+                            "autoriteDenregistrement": {"type":"string"}
                           },
                           "required": ["codeModeExercice","codeSecteurDactivite","codeSectionPharmacien","codeRole","codeGenreActivite","numeroSiretSite","numeroSirenSite","numeroFinessSite","numeroFinessetablissementJuridique","identifiantTechniqueDeLaStructure","raisonSocialeSite","enseigneCommercialeSite","complementDestinataire","complementPointGeographique","numeroVoie","indiceRepetitionVoie","codeTypeDeVoie","libelleVoie","mentionDistribution","bureauCedex","codePostal","codeCommune","codePays","telephone","telephone2","telecopie","adresseEMail","codeDepartement","ancienIdentifiantDeLaStructure","autoriteDenregistrement"]
                         },
@@ -267,7 +267,7 @@
                             "adresseEMail": {"type":"string"},
                             "codeDepartement": {"type":"string"},
                             "ancienIdentifiantDeLaStructure": {"type":"string"},
-                            "autoriteDenregistrement": {"type":"string"},
+                            "autoriteDenregistrement": {"type":"string"}
                           },
                           "required": ["codeModeExercice","codeSecteurDactivite","codeSectionPharmacien","codeRole","codeGenreActivite","numeroSiretSite","numeroSirenSite","numeroFinessSite","numeroFinessetablissementJuridique","identifiantTechniqueDeLaStructure","raisonSocialeSite","enseigneCommercialeSite","complementDestinataire","complementPointGeographique","numeroVoie","indiceRepetitionVoie","codeTypeDeVoie","libelleVoie","mentionDistribution","bureauCedex","codePostal","codeCommune","codePays","telephone","telephone2","telecopie","adresseEMail","codeDepartement","ancienIdentifiantDeLaStructure","autoriteDenregistrement"]
                         }
@@ -302,7 +302,7 @@
           ]
         },
         "SubjectNameID": {"type":"string"},
-        "family_name": {"type":"string"},
+        "family_name": {"type":"string"}
       },
       "required": ["Secteur_Activite","sub","email_verified","SubjectOrganization","Mode_Acces_Raison","preferred_username","given_name","Acces_Regulation_Medicale","UITVersion","Palier_Authentification","SubjectRefPro","SubjectOrganizationID","SubjectRole","PSI_Locale","otherIds","SubjectNameID","family_name"]
     }
