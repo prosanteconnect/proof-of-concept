@@ -83,6 +83,7 @@ EOH
 spring.application.name=psc-remote-cache-api
 server.servlet.contextPath=/remote-cache/api
 logging.level.org.springframework=ERROR
+logging.level.fr.ans.psc.remote.cache.api.*=DEBUG
 
 spring.redis.database=0
 spring.redis.host={{ range service "redis-remote-cache" }}{{ .Address }}{{ end }}
