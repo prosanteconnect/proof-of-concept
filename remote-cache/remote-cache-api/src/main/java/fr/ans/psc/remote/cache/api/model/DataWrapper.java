@@ -21,7 +21,7 @@ public class DataWrapper {
     // must be static because Jackson ObjectNode doesn't have default constructor,
     // which leads to failures with SpringData
     @JsonProperty(value = "bag", required = true)
-    private static JsonNode bag;
+    private JsonNode bag;
     
     @JsonIgnore 
     @TimeToLive

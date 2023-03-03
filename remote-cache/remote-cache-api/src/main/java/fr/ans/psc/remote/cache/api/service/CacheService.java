@@ -39,6 +39,7 @@ public class CacheService {
         DataWrapper saved;
         try {
             log.debug("Trying to save entry for key {} in Redis server...", wrapper.getKey());
+   //         log.debug("bag class after : {}", );
             log.debug("bag class before : {}", wrapper.getBag().getClass());
             saved = pscContextRepository.save(wrapper);
             log.debug("Entry for key {} successfully saved", wrapper.getKey());
@@ -56,7 +57,7 @@ public class CacheService {
         try {
             log.debug("requesting Redis server for key {}...", key);
             optionalContext = pscContextRepository.findById(key);
-            log.debug("response received from Redis server for key {}, isReponseEmpty: {}", key, optionalContext.isPresent());
+            log.debug("response received from Redis server for key {}, isReponse: {}", key, optionalContext.isPresent());
             if (optionalContext.isPresent()) {
             log.debug("schemaId: {}, TTL: {}, bag: {}", optionalContext.get().getSchemaId(), optionalContext.get().getTtl(),optionalContext.get().getBag().asText() );
             }
