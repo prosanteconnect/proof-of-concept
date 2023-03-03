@@ -63,7 +63,7 @@ public class CacheController {
             if (schemaId.startsWith(SCHEMA_PSC_DATA)) {
             	timeToLIve = LONG_TIME_TO_LIVE;
             }
-            log.debug("set TTL : {}, schemaID: {}, key: {}", timeToLIve, schemaId, key);
+            log.debug("PUT request for TTL : {}, schemaID: {}, key: {}", timeToLIve, schemaId, key);
             DataWrapper toStore = new DataWrapper(key, wrapper.getSchemaId(), wrapper.getBag(),timeToLIve );
        //     toStore.setKey(key);
             DataWrapper savedContext = cacheService.putInCache(toStore);

@@ -56,7 +56,11 @@ public class CacheService {
         try {
             log.debug("requesting Redis server for key {}...", key);
             optionalContext = pscContextRepository.findById(key);
-            log.debug("response received from Redis server for key {}", key);
+            log.debug("response received from Redis server for key {}, isReponseEmpty: {}", key, optionalContext.isPresent());
+            if (optionalContext.isPresent()) {
+            log.debug("schemaId: {}, TTL: {}, bag: {}", optionalContext.get().getSchemaId(), optionalContext.get().getTtl(),optionalContext.get().getBag().asText() );
+            }
+            
         } catch (Exception e) {
             log.error("Error occurred while requesting Redis server", e);
             throw new PscMissingCacheKeyException();
