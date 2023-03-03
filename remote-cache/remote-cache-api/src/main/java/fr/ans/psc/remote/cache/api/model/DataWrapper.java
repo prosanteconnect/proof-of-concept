@@ -1,5 +1,6 @@
 package fr.ans.psc.remote.cache.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.data.annotation.Id;
@@ -22,6 +23,7 @@ public class DataWrapper {
     @JsonProperty(value = "bag", required = true)
     private static JsonNode bag;
     
+    @JsonIgnore 
     @TimeToLive
     private Long ttl;
 
