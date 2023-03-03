@@ -34,6 +34,11 @@ public class CacheController {
     private CacheService cacheService;
 
     private static String CACHE_KEY_HEADER= "X-CACHE-KEY";
+//    private static Long SHORT_TIME_TO_LIVE = 900L; // en second (900s = 15 mn)
+//    private static Long LONG_TIME_TO_LIVE = 14400L; //(14400s = 4h)
+    private static Long SHORT_TIME_TO_LIVE = 300L; // 5 mn 
+    private static Long LONG_TIME_TO_LIVE = 900L; // 15mn 
+    private static String SCHEMA_PSC_DATA = "psc-data"; 
     
     @GetMapping()
     public ResponseEntity<DataWrapper> getDataCached() {
@@ -53,8 +58,13 @@ public class CacheController {
         try {
             log.debug("Put cache requested");
             String key = getKeyOfCache();
-            DataWrapper toStore = new DataWrapper(null, wrapper.getSchemaId(), wrapper.getBag());
-            toStore.setKey(key);
+            Long timeToLIve = SHORT_TIME_TO_LIVE;
+            String schemaId = wrapper.getSchemaId();
+            if (schemaId.startsWith(SCHEMA_PSC_DATA)) {
+            	timeToLIve = LONG_TIME_TO_LIVE;
+            }
+            DataWrapper toStore = new DataWrapper(key, wrapper.getSchemaId(), wrapper.getBag(),timeToLIve );
+       //     toStore.setKey(key);
             DataWrapper savedContext = cacheService.putInCache(toStore);
             return new ResponseEntity<>(savedContext, HttpStatus.OK);
         } catch (PscContextSharingException e) {

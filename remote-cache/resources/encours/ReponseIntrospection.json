@@ -1,0 +1,27 @@
+{
+    "exp": 1677837319,
+    "iat": 1677837199,
+    "auth_time": 1677837199,
+    "jti": "473c64c8-85a0-46bd-8cab-8eec88bd2792",
+    "iss": "https://auth.bas.psc.esante.gouv.fr/auth/realms/esante-wallet",
+    "sub": "f:550dc1c8-d97b-4b1e-ac8c-8eb4471cf9dd:899700427885",
+    "typ": "Bearer",
+    "azp": "ans-poc-esignsante-bas",
+    "nonce": "",
+    "session_state": "9de15f1a-82f5-4044-90df-ea9012c6053c",
+    "preferred_username": "899700427885",
+    "acr": "eidas3",
+    "scope": "openid profile scope_all identity",
+    "sid": "9de15f1a-82f5-4044-90df-ea9012c6053c",
+    "authMode": "CARD",
+    "otherIds": [
+        {
+            "identifiant": "899700427885",
+            "origine": "RPPS",
+            "qualite": 1
+        }
+    ],
+    "client_id": "ans-poc-esignsante-bas",
+    "username": "899700427885",
+    "active": true
+}
