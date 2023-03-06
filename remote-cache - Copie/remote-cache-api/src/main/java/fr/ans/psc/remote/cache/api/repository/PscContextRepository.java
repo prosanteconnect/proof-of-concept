@@ -3,8 +3,8 @@ package fr.ans.psc.remote.cache.api.repository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import fr.ans.psc.remote.cache.api.model.RedisDataWrapper;
+import fr.ans.psc.remote.cache.api.model.DataWrapper;
 
 @Repository
-public interface PscContextRepository extends CrudRepository<RedisDataWrapper, String> {
+public interface PscContextRepository extends CrudRepository<DataWrapper, String> {
 }

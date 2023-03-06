@@ -18,13 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-
 import fr.ans.psc.remote.cache.api.exception.PscContextSharingException;
 import fr.ans.psc.remote.cache.api.exception.PscMissingCacheKeyException;
 import fr.ans.psc.remote.cache.api.model.DataWrapper;
-import fr.ans.psc.remote.cache.api.model.RedisDataWrapper;
 import fr.ans.psc.remote.cache.api.service.CacheService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -45,7 +41,7 @@ public class CacheController {
     private static String SCHEMA_PSC_DATA = "psc-data"; 
     
     @GetMapping()
-    public ResponseEntity<DataWrapper> getDataCached() throws JsonMappingException, JsonProcessingException {
+    public ResponseEntity<DataWrapper> getDataCached() {
         try {
             log.debug("Get context requested");
             String key = getKeyOfCache();
@@ -58,7 +54,7 @@ public class CacheController {
     }
 
     @PutMapping(consumes = {"application/json"}, produces = {"application/json"})
-    public ResponseEntity<DataWrapper> putDataInCache(@RequestBody DataWrapper wrapper) throws JsonMappingException, JsonProcessingException {
+    public ResponseEntity<DataWrapper> putDataInCache(@RequestBody DataWrapper wrapper) {
         try {
             log.debug("Put cache requested");
             String key = getKeyOfCache();
@@ -67,12 +63,8 @@ public class CacheController {
             if (schemaId.startsWith(SCHEMA_PSC_DATA)) {
             	timeToLIve = LONG_TIME_TO_LIVE;
             }
-          
-            String jsonBag = wrapper.getBag().asText();
-         //   String tmp = wrapper.getBag().
             log.debug("PUT request for TTL : {}, schemaID: {}, key: {}", timeToLIve, schemaId, key);
-            
-            RedisDataWrapper toStore = new RedisDataWrapper(key, wrapper.getSchemaId(), jsonBag,timeToLIve );
+            DataWrapper toStore = new DataWrapper(key, wrapper.getSchemaId(), wrapper.getBag(),timeToLIve );
        //     toStore.setKey(key);
             DataWrapper savedContext = cacheService.putInCache(toStore);
             return new ResponseEntity<>(savedContext, HttpStatus.OK);
