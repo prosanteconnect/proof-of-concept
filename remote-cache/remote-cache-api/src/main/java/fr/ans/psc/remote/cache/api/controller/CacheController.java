@@ -20,6 +20,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.ans.psc.remote.cache.api.exception.PscContextSharingException;
 import fr.ans.psc.remote.cache.api.exception.PscMissingCacheKeyException;
@@ -36,6 +37,8 @@ public class CacheController {
 
     @Autowired
     private CacheService cacheService;
+    
+    private ObjectMapper mapper = new ObjectMapper();
 
     private static String CACHE_KEY_HEADER= "X-CACHE-KEY";
 //    private static Long SHORT_TIME_TO_LIVE = 900L; // en second (900s = 15 mn)
@@ -68,9 +71,9 @@ public class CacheController {
             	timeToLIve = LONG_TIME_TO_LIVE;
             }
           
-            String jsonBag = wrapper.getBag().asText();
+            String jsonBag = mapper.writeValueAsString(wrapper.getBag());
          //   String tmp = wrapper.getBag().
-            log.debug("PUT request for TTL : {}, schemaID: {}, key: {}", timeToLIve, schemaId, key);
+            log.debug("PUT request for TTL : {}, schemaID: {}, key: {}; jsonBag {}", timeToLIve, schemaId, key);
             
             RedisDataWrapper toStore = new RedisDataWrapper(key, wrapper.getSchemaId(), jsonBag,timeToLIve );
        //     toStore.setKey(key);
