@@ -21,8 +21,6 @@ paths:
                 $ref: '#/components/schemas/PsDAMs'
         '400':
           description: Paramètre obligatoire manquant ou null
-        '401':
-          description: Non authorisé. Token ProSante non valide ou non actif
         '410':
           description: 'Gone. Aucune DAM à renvoyér. Aucun PS trouvé en base pour l''''IdNational, ou pas DAMs (avant ou après filtrage)'
           content:
@@ -77,8 +75,6 @@ paths:
                 $ref: '#/components/schemas/PsDAMs'
         '400':
           description: Paramètre obligatoire manquant ou null
-        '401':
-          description: Non authorisé. Token ProSante non valide ou non actif
         '410':
           description: 'Gone. Aucune DAM à renvoyér. Aucun PS trouvé en base pour l''''IdNational, ou pas DAMs (avant ou après filtrage)'
           content:
@@ -217,8 +213,4 @@ components:
           type: string
         message:
           type: string
-  securitySchemes:
-    Pro-SanteConnect_BAS:
-      type: openIdConnect
-      description: header Authorization (BAS PSC)
-      openIdConnectUrl: 'https://auth.bas.psc.esante.gouv.fr/auth/realms/esante-wallet/.well-known/wallet-openid-configuration'
+  securitySchemes: {}
