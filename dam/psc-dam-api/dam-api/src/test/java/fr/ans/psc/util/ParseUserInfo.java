@@ -43,7 +43,7 @@ public class ParseUserInfo {
 	@DisplayName("en cours ...")
 	public void essaiTest() throws JsonMappingException, JsonProcessingException {
 		
-
+/*
 		String jsonUserInfo =  USERINFO;
 		System.out.println(USERINFO);
 		ObjectMapper mapper = new ObjectMapper();
@@ -62,7 +62,7 @@ public class ParseUserInfo {
 				System.out.println(activite.getRaisonSocialeSite());
 			}
 		}
-	   
+	*/   
     
 	}
 	

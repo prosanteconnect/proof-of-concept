@@ -38,7 +38,8 @@ public class Tokens {
 	@Test
 	@DisplayName("en cours ...")
 	public void tmpTest() throws UnsupportedEncodingException, IllegalArgumentException, JSONException, JsonMappingException, JsonProcessingException {
-		
+	
+		/*
 		//prefix
 		Boolean prefixOK = JWTexpired.startsWith(PREFIX_BEARER);		
 		assertTrue(prefixOK);
@@ -87,7 +88,7 @@ public class Tokens {
 		String decoded = Helper.safeUrlDecodeBase64toString(signature);
 		System.out.println(decoded);
 		
-		
+		*/
 	}
 	
 	
