@@ -41,10 +41,10 @@ public class CacheController {
     private ObjectMapper mapper = new ObjectMapper();
 
     private static String CACHE_KEY_HEADER= "X-CACHE-KEY";
-//    private static Long SHORT_TIME_TO_LIVE = 900L; // en second (900s = 15 mn)
-//    private static Long LONG_TIME_TO_LIVE = 14400L; //(14400s = 4h)
-    private static Long SHORT_TIME_TO_LIVE = 300L; // 5 mn 
-    private static Long LONG_TIME_TO_LIVE = 900L; // 15mn 
+    private static Long SHORT_TIME_TO_LIVE = 900L; // en second (900s = 15 mn)
+    private static Long LONG_TIME_TO_LIVE = 14400L; //(14400s = 4h)
+//    private static Long SHORT_TIME_TO_LIVE = 300L; // 5 mn 
+//    private static Long LONG_TIME_TO_LIVE = 900L; // 15mn 
     private static String SCHEMA_PSC_DATA = "psc-data"; 
     
     @GetMapping()

@@ -43,7 +43,6 @@ public class CacheService {
         RedisDataWrapper saved;
         try {
             log.debug("Trying to save entry for key {} in Redis server...", wrapper.getKey());
-   //         log.debug("bag class after : {}", );
             log.debug("bag class before : {}", wrapper.getBag().getClass());
             saved = pscContextRepository.save(wrapper);
             log.debug("Entry for key {} successfully saved", wrapper.getKey());
