@@ -1,7 +1,11 @@
 package fr.ans.psc.dam.bdd;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -43,7 +47,28 @@ public class MongoDBTest {
 		structureIds = repo.findByStructureTechnicalId("R10000000553881");
 		assertNotNull(structureIds);
 		assertEquals(structureIds.getIdentifiantMetier(), "10002525375006");
-
+	}
+	
+	
+	@Test
+	@MongoDataSet(value = "/data-mongo/rass-structure.json", cleanBefore = true, cleanAfter = true)
+	public void readListMongoDBTest() {		
+		
+		List<String> ids = new ArrayList<String>();
+		ids.add("6");
+		ids.add("R10000000553881");
+		List<StructureIds> structureIds = repo.findByStructureTechnicalIdIn(ids);
+		assertNotNull(structureIds);
+		assertFalse(structureIds.isEmpty());
+		assertEquals(structureIds.size(),2);
+		for (StructureIds structureIds2 : structureIds) {
+			if (structureIds2.getStructureTechnicalId().equals("6"))
+			{assertEquals(structureIds2.getIdentifiantMetier(), "99900007776001");}
+			
+			if (structureIds2.getStructureTechnicalId().equals("R10000000553881"))
+			{assertEquals(structureIds2.getIdentifiantMetier(), "10002525375006");}
+		}
+		
 	}
 
 }

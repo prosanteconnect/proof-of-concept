@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.ans.psc.dam.model.UsefulUserInfo;
@@ -26,9 +27,19 @@ import lombok.extern.slf4j.Slf4j;
 public class ParseUserInfo {
 
 	private static String  XUSERINFO = "eyJTZWN0ZXVyX0FjdGl2aXRlIjoiU0EwN14xLjIuMjUwLjEuNzEuNC4yLjQiLCJzdWIiOiJmOjU1MGRjMWM4LWQ5N2ItNGIxZS1hYzhjLThlYjQ0NzFjZjlkZDo4OTk3MDA0Mjc4ODUiLCJTdWJqZWN0T3JnYW5pemF0aW9uIjoiQ0FCSU5FVCBNIERPQzAwNDI3ODgiLCJNb2RlX0FjY2VzX1JhaXNvbiI6IiIsInByZWZlcnJlZF91c2VybmFtZSI6Ijg5OTcwMDQyNzg4NSIsImdpdmVuX25hbWUiOiJLSVQiLCJBY2Nlc19SZWd1bGF0aW9uX01lZGljYWxlIjoiRkFVWCIsIlVJVFZlcnNpb24iOiIxLjAiLCJhdXRoTW9kZSI6IkNBUkQiLCJQYWxpZXJfQXV0aGVudGlmaWNhdGlvbiI6IkFQUFBSSVAzXjEuMi4yNTAuMS4yMTMuMS41LjEuMS4xIiwiU3ViamVjdFJlZlBybyI6eyJjb2RlQ2l2aWxpdGUiOiJNIiwiZXhlcmNpY2VzIjpbeyJjb2RlUHJvZmVzc2lvbiI6IjEwIiwiY29kZUNhdGVnb3JpZVByb2Zlc3Npb25uZWxsZSI6IkMiLCJjb2RlQ2l2aWxpdGVEZXhlcmNpY2UiOiJEUiIsIm5vbURleGVyY2ljZSI6IkRPQzAwNDI3ODgiLCJwcmVub21EZXhlcmNpY2UiOiJLSVQiLCJjb2RlVHlwZVNhdm9pckZhaXJlIjoiUyIsImNvZGVTYXZvaXJGYWlyZSI6IlNNMjYiLCJhY3Rpdml0aWVzIjpbeyJjb2RlTW9kZUV4ZXJjaWNlIjoiTCIsImNvZGVTZWN0ZXVyRGFjdGl2aXRlIjoiU0EwNyIsImNvZGVTZWN0aW9uUGhhcm1hY2llbiI6IiIsImNvZGVSb2xlIjoiIiwiY29kZUdlbnJlQWN0aXZpdGUiOiIiLCJudW1lcm9TaXJldFNpdGUiOiIiLCJudW1lcm9TaXJlblNpdGUiOiIiLCJudW1lcm9GaW5lc3NTaXRlIjoiIiwibnVtZXJvRmluZXNzZXRhYmxpc3NlbWVudEp1cmlkaXF1ZSI6IiIsImlkZW50aWZpYW50VGVjaG5pcXVlRGVMYVN0cnVjdHVyZSI6IlIxMDI2NzEiLCJyYWlzb25Tb2NpYWxlU2l0ZSI6IkNBQklORVQgTSBET0MwMDQyNzg4IiwiZW5zZWlnbmVDb21tZXJjaWFsZVNpdGUiOiIiLCJjb21wbGVtZW50RGVzdGluYXRhaXJlIjoiQ0FCSU5FVCBNIERPQyIsImNvbXBsZW1lbnRQb2ludEdlb2dyYXBoaXF1ZSI6IiIsIm51bWVyb1ZvaWUiOiIxIiwiaW5kaWNlUmVwZXRpdGlvblZvaWUiOiIiLCJjb2RlVHlwZURlVm9pZSI6IlIiLCJsaWJlbGxlVm9pZSI6Ik5PSVIiLCJtZW50aW9uRGlzdHJpYnV0aW9uIjoiIiwiYnVyZWF1Q2VkZXgiOiI3NTAwOSBQQVJJUyIsImNvZGVQb3N0YWwiOiI3NTAwOSIsImNvZGVDb21tdW5lIjoiIiwiY29kZVBheXMiOiI5OTAwMCIsInRlbGVwaG9uZSI6IiIsInRlbGVwaG9uZTIiOiIiLCJ0ZWxlY29waWUiOiIiLCJhZHJlc3NlRU1haWwiOiIiLCJjb2RlRGVwYXJ0ZW1lbnQiOiIiLCJhbmNpZW5JZGVudGlmaWFudERlTGFTdHJ1Y3R1cmUiOiI0OTk3MDA0Mjc4ODUwMDYiLCJhdXRvcml0ZURlbnJlZ2lzdHJlbWVudCI6IkNOT00vQ05PTS9DTk9NIn0seyJjb2RlTW9kZUV4ZXJjaWNlIjoiUyIsImNvZGVTZWN0ZXVyRGFjdGl2aXRlIjoiU0EwMSIsImNvZGVTZWN0aW9uUGhhcm1hY2llbiI6IiIsImNvZGVSb2xlIjoiIiwiY29kZUdlbnJlQWN0aXZpdGUiOiIiLCJudW1lcm9TaXJldFNpdGUiOiIiLCJudW1lcm9TaXJlblNpdGUiOiIiLCJudW1lcm9GaW5lc3NTaXRlIjoiMEIwMTkzNDg4IiwibnVtZXJvRmluZXNzZXRhYmxpc3NlbWVudEp1cmlkaXF1ZSI6IjFCMDA2NDE2NiIsImlkZW50aWZpYW50VGVjaG5pcXVlRGVMYVN0cnVjdHVyZSI6IkYwQjAxOTM0ODgiLCJyYWlzb25Tb2NpYWxlU2l0ZSI6IkhPUElUQUwgR0VORVJJUVVFICBGSU4gVkFSSSIsImVuc2VpZ25lQ29tbWVyY2lhbGVTaXRlIjoiIiwiY29tcGxlbWVudERlc3RpbmF0YWlyZSI6IiIsImNvbXBsZW1lbnRQb2ludEdlb2dyYXBoaXF1ZSI6IiIsIm51bWVyb1ZvaWUiOiIxMCIsImluZGljZVJlcGV0aXRpb25Wb2llIjoiIiwiY29kZVR5cGVEZVZvaWUiOiJSIiwibGliZWxsZVZvaWUiOiJERSBQQVJJUyIsIm1lbnRpb25EaXN0cmlidXRpb24iOiIiLCJidXJlYXVDZWRleCI6IlBBUklTIiwiY29kZVBvc3RhbCI6Ijc1MDA5IiwiY29kZUNvbW11bmUiOiIiLCJjb2RlUGF5cyI6IiIsInRlbGVwaG9uZSI6IiIsInRlbGVwaG9uZTIiOiIiLCJ0ZWxlY29waWUiOiIiLCJhZHJlc3NlRU1haWwiOiIiLCJjb2RlRGVwYXJ0ZW1lbnQiOiIiLCJhbmNpZW5JZGVudGlmaWFudERlTGFTdHJ1Y3R1cmUiOiIxMEIwMTkzNDg4IiwiYXV0b3JpdGVEZW5yZWdpc3RyZW1lbnQiOiJDTk9NL0NOT00vQVJTIn1dfV19LCJTdWJqZWN0T3JnYW5pemF0aW9uSUQiOiJSMTAyNjcxIiwiU3ViamVjdFJvbGUiOlsiMTBeMS4yLjI1MC4xLjIxMy4xLjEuNS41Il0sIlBTSV9Mb2NhbGUiOiIxLjIuMjUwLjEuMjEzLjEuMy4xLjEiLCJvdGhlcklkcyI6W3siaWRlbnRpZmlhbnQiOiI4OTk3MDA0Mjc4ODUiLCJvcmlnaW5lIjoiUlBQUyIsInF1YWxpdGUiOjF9XSwiU3ViamVjdE5hbWVJRCI6Ijg5OTcwMDQyNzg4NSIsImZhbWlseV9uYW1lIjoiRE9DMDA0Mjc4OCJ9";
+	//Userinfo avec 2 activités
 	private static String USERINFO = "{\"Secteur_Activite\":\"SA07^1.2.250.1.71.4.2.4\",\"sub\":\"f:550dc1c8-d97b-4b1e-ac8c-8eb4471cf9dd:899700427885\",\"SubjectOrganization\":\"CABINET M DOC0042788\",\"Mode_Acces_Raison\":\"\",\"preferred_username\":\"899700427885\",\"given_name\":\"KIT\",\"Acces_Regulation_Medicale\":\"FAUX\",\"UITVersion\":\"1.0\",\"authMode\":\"CARD\",\"Palier_Authentification\":\"APPPRIP3^1.2.250.1.213.1.5.1.1.1\",\"SubjectRefPro\":{\"codeCivilite\":\"M\",\"exercices\":[{\"codeProfession\":\"10\",\"codeCategorieProfessionnelle\":\"C\",\"codeCiviliteDexercice\":\"DR\",\"nomDexercice\":\"DOC0042788\",\"prenomDexercice\":\"KIT\",\"codeTypeSavoirFaire\":\"S\",\"codeSavoirFaire\":\"SM26\",\"activities\":[{\"codeModeExercice\":\"L\",\"codeSecteurDactivite\":\"SA07\",\"codeSectionPharmacien\":\"\",\"codeRole\":\"\",\"codeGenreActivite\":\"\",\"numeroSiretSite\":\"\",\"numeroSirenSite\":\"\",\"numeroFinessSite\":\"\",\"numeroFinessetablissementJuridique\":\"\",\"identifiantTechniqueDeLaStructure\":\"R102671\",\"raisonSocialeSite\":\"CABINET M DOC0042788\",\"enseigneCommercialeSite\":\"\",\"complementDestinataire\":\"CABINET M DOC\",\"complementPointGeographique\":\"\",\"numeroVoie\":\"1\",\"indiceRepetitionVoie\":\"\",\"codeTypeDeVoie\":\"R\",\"libelleVoie\":\"NOIR\",\"mentionDistribution\":\"\",\"bureauCedex\":\"75009 PARIS\",\"codePostal\":\"75009\",\"codeCommune\":\"\",\"codePays\":\"99000\",\"telephone\":\"\",\"telephone2\":\"\",\"telecopie\":\"\",\"adresseEMail\":\"\",\"codeDepartement\":\"\",\"ancienIdentifiantDeLaStructure\":\"499700427885006\",\"autoriteDenregistrement\":\"CNOM/CNOM/CNOM\"},{\"codeModeExercice\":\"S\",\"codeSecteurDactivite\":\"SA01\",\"codeSectionPharmacien\":\"\",\"codeRole\":\"\",\"codeGenreActivite\":\"\",\"numeroSiretSite\":\"\",\"numeroSirenSite\":\"\",\"numeroFinessSite\":\"0B0193488\",\"numeroFinessetablissementJuridique\":\"1B0064166\",\"identifiantTechniqueDeLaStructure\":\"F0B0193488\",\"raisonSocialeSite\":\"HOPITAL GENERIQUE  FIN VARI\",\"enseigneCommercialeSite\":\"\",\"complementDestinataire\":\"\",\"complementPointGeographique\":\"\",\"numeroVoie\":\"10\",\"indiceRepetitionVoie\":\"\",\"codeTypeDeVoie\":\"R\",\"libelleVoie\":\"DE PARIS\",\"mentionDistribution\":\"\",\"bureauCedex\":\"PARIS\",\"codePostal\":\"75009\",\"codeCommune\":\"\",\"codePays\":\"\",\"telephone\":\"\",\"telephone2\":\"\",\"telecopie\":\"\",\"adresseEMail\":\"\",\"codeDepartement\":\"\",\"ancienIdentifiantDeLaStructure\":\"10B0193488\",\"autoriteDenregistrement\":\"CNOM/CNOM/ARS\"}]}]},\"SubjectOrganizationID\":\"R102671\",\"SubjectRole\":[\"10^1.2.250.1.213.1.1.5.5\"],\"PSI_Locale\":\"1.2.250.1.213.1.3.1.1\",\"otherIds\":[{\"identifiant\":\"899700427885\",\"origine\":\"RPPS\",\"qualite\":1}],\"SubjectNameID\":\"899700427885\",\"family_name\":\"DOC0042788\"}";
 	private static String USERINFO_CHAMPS_SUPPLEMENTAIRE = "{\"Secteur_Activite\":\"SA07^1.2.250.1.71.4.2.4\",\"sub\":\"f:550dc1c8-d97b-4b1e-ac8c-8eb4471cf9dd:899700427885\",\"SubjectOrganization\":\"CABINET M DOC0042788\",\"Mode_Acces_Raison\":\"\",\"preferred_username\":\"899700427885\",\"given_name\":\"KIT\",\"Acces_Regulation_Medicale\":\"FAUX\",\"ChampsAjoute\":\"champAjoute\",\"UITVersion\":\"1.0\",\"authMode\":\"CARD\",\"Palier_Authentification\":\"APPPRIP3^1.2.250.1.213.1.5.1.1.1\",\"SubjectRefPro\":{\"codeCivilite\":\"M\",\"exercices\":[{\"codeProfession\":\"10\",\"codeCategorieProfessionnelle\":\"C\",\"codeCiviliteDexercice\":\"DR\",\"nomDexercice\":\"DOC0042788\",\"prenomDexercice\":\"KIT\",\"codeTypeSavoirFaire\":\"S\",\"codeSavoirFaire\":\"SM26\",\"activities\":[{\"codeModeExercice\":\"L\",\"codeSecteurDactivite\":\"SA07\",\"codeSectionPharmacien\":\"\",\"codeRole\":\"\",\"codeGenreActivite\":\"\",\"numeroSiretSite\":\"\",\"numeroSirenSite\":\"\",\"numeroFinessSite\":\"\",\"numeroFinessetablissementJuridique\":\"\",\"identifiantTechniqueDeLaStructure\":\"R102671\",\"raisonSocialeSite\":\"CABINET M DOC0042788\",\"enseigneCommercialeSite\":\"\",\"complementDestinataire\":\"CABINET M DOC\",\"complementPointGeographique\":\"\",\"numeroVoie\":\"1\",\"indiceRepetitionVoie\":\"\",\"codeTypeDeVoie\":\"R\",\"libelleVoie\":\"NOIR\",\"mentionDistribution\":\"\",\"bureauCedex\":\"75009 PARIS\",\"codePostal\":\"75009\",\"codeCommune\":\"\",\"codePays\":\"99000\",\"telephone\":\"\",\"telephone2\":\"\",\"telecopie\":\"\",\"adresseEMail\":\"\",\"codeDepartement\":\"\",\"ancienIdentifiantDeLaStructure\":\"499700427885006\",\"autoriteDenregistrement\":\"CNOM/CNOM/CNOM\"},{\"codeModeExercice\":\"S\",\"codeSecteurDactivite\":\"SA01\",\"codeSectionPharmacien\":\"\",\"codeRole\":\"\",\"codeGenreActivite\":\"\",\"numeroSiretSite\":\"\",\"numeroSirenSite\":\"\",\"numeroFinessSite\":\"0B0193488\",\"numeroFinessetablissementJuridique\":\"1B0064166\",\"identifiantTechniqueDeLaStructure\":\"F0B0193488\",\"raisonSocialeSite\":\"HOPITAL GENERIQUE  FIN VARI\",\"enseigneCommercialeSite\":\"\",\"complementDestinataire\":\"\",\"complementPointGeographique\":\"\",\"numeroVoie\":\"10\",\"indiceRepetitionVoie\":\"\",\"codeTypeDeVoie\":\"R\",\"libelleVoie\":\"DE PARIS\",\"mentionDistribution\":\"\",\"bureauCedex\":\"PARIS\",\"codePostal\":\"75009\",\"codeCommune\":\"\",\"codePays\":\"\",\"telephone\":\"\",\"telephone2\":\"\",\"telecopie\":\"\",\"adresseEMail\":\"\",\"codeDepartement\":\"\",\"ancienIdentifiantDeLaStructure\":\"10B0193488\",\"autoriteDenregistrement\":\"CNOM/CNOM/ARS\"}]}]},\"SubjectOrganizationID\":\"R102671\",\"SubjectRole\":[\"10^1.2.250.1.213.1.1.5.5\"],\"PSI_Locale\":\"1.2.250.1.213.1.3.1.1\",\"otherIds\":[{\"identifiant\":\"899700427885\",\"origine\":\"RPPS\",\"qualite\":1}],\"SubjectNameID\":\"899700427885\",\"family_name\":\"DOC0042788\"}";
 	
+	//userinfo avec 5 activités
+	//{"Secteur_Activite":"SA07^1.2.250.1.71.4.2.4","sub":"f:550dc1c8-d97b-4b1e-ac8c-8eb4471cf9dd:ANS20210107161422","email_verified":false,"SubjectOrganization":"CAB MED BIS TOUBIB0023550","Mode_Acces_Raison":"","preferred_username":"ANS20210107161422","given_name":"Paul","Acces_Regulation_Medicale":"FAUX","UITVersion":"1.0","Palier_Authentification":"APPPRIP3^1.2.250.1.213.1.5.1.1.1","SubjectRefPro":{"codeCivilite":"M","exercices":[{"codeProfession":"10","codeCategorieProfessionnelle":"C","codeCiviliteDexercice":"M","nomDexercice":"Docteur OIDC","prenomDexercice":"Paul","codeTypeSavoirFaire":"S","codeSavoirFaire":"SM54","activities":[{"codeModeExercice":"L","codeSecteurDactivite":"SA07","codeSectionPharmacien":"","codeRole":"","codeGenreActivite":"GENR01","numeroSiretSite":"","numeroSirenSite":"","numeroFinessSite":"","numeroFinessetablissementJuridique":"","identifiantTechniqueDeLaStructure":"","raisonSocialeSite":"CAB MED BIS TOUBIB0023550","enseigneCommercialeSite":"","complementDestinataire":"","complementPointGeographique":"","numeroVoie":"","indiceRepetitionVoie":"","codeTypeDeVoie":"R","libelleVoie":"PARIS","mentionDistribution":"","bureauCedex":"","codePostal":"75009","codeCommune":"75109","codePays":"","telephone":"","telephone2":"","telecopie":"","adresseEMail":"","codeDepartement":"75","ancienIdentifiantDeLaStructure":"","autoriteDenregistrement":""},{"codeModeExercice":"L","codeSecteurDactivite":"SA07","codeSectionPharmacien":"","codeRole":"","codeGenreActivite":"GENR01","numeroSiretSite":"","numeroSirenSite":"","numeroFinessSite":"","numeroFinessetablissementJuridique":"","identifiantTechniqueDeLaStructure":"","raisonSocialeSite":"CABINET MEDICAL0023550","enseigneCommercialeSite":"","complementDestinataire":"","complementPointGeographique":"","numeroVoie":"2","indiceRepetitionVoie":"","codeTypeDeVoie":"R","libelleVoie":"LIBERTA","mentionDistribution":"","bureauCedex":"","codePostal":"75009","codeCommune":"75109","codePays":"","telephone":"","telephone2":"","telecopie":"","adresseEMail":"","codeDepartement":"75","ancienIdentifiantDeLaStructure":"","autoriteDenregistrement":""},{"codeModeExercice":"S","codeSecteurDactivite":"SA01","codeSectionPharmacien":"","codeRole":"","codeGenreActivite":"GENR01","numeroSiretSite":"","numeroSirenSite":"","numeroFinessSite":"","numeroFinessetablissementJuridique":"","identifiantTechniqueDeLaStructure":"","raisonSocialeSite":"HOPITAL GENERIQUE","enseigneCommercialeSite":"","complementDestinataire":"","complementPointGeographique":"","numeroVoie":"20","indiceRepetitionVoie":"","codeTypeDeVoie":"R","libelleVoie":"DE PARIS","mentionDistribution":"","bureauCedex":"","codePostal":"75020","codeCommune":"75120","codePays":"","telephone":"","telephone2":"","telecopie":"","adresseEMail":"","codeDepartement":"75","ancienIdentifiantDeLaStructure":"","autoriteDenregistrement":""},{"codeModeExercice":"S","codeSecteurDactivite":"SA43","codeSectionPharmacien":"","codeRole":"","codeGenreActivite":"GENR01","numeroSiretSite":"00000000016972","numeroSirenSite":"000000000","numeroFinessSite":"","numeroFinessetablissementJuridique":"","identifiantTechniqueDeLaStructure":"","raisonSocialeSite":"CONSEIL DES ORDRES","enseigneCommercialeSite":"","complementDestinataire":"","complementPointGeographique":"","numeroVoie":"28","indiceRepetitionVoie":"","codeTypeDeVoie":"R","libelleVoie":"DES INVALIDES","mentionDistribution":"","bureauCedex":"","codePostal":"75009","codeCommune":"75109","codePays":"","telephone":"","telephone2":"","telecopie":"","adresseEMail":"","codeDepartement":"75","ancienIdentifiantDeLaStructure":"","autoriteDenregistrement":""},{"codeModeExercice":"S","codeSecteurDactivite":"SA43","codeSectionPharmacien":"","codeRole":"","codeGenreActivite":"GENR01","numeroSiretSite":"00000000079608","numeroSirenSite":"000000000","numeroFinessSite":"","numeroFinessetablissementJuridique":"","identifiantTechniqueDeLaStructure":"","raisonSocialeSite":"ORGANISME ND7960","enseigneCommercialeSite":"","complementDestinataire":"","complementPointGeographique":"","numeroVoie":"2","indiceRepetitionVoie":"","codeTypeDeVoie":"R","libelleVoie":"MOULIN VERT","mentionDistribution":"","bureauCedex":"","codePostal":"75009","codeCommune":"75109","codePays":"","telephone":"","telephone2":"","telecopie":"","adresseEMail":"","codeDepartement":"75","ancienIdentifiantDeLaStructure":"","autoriteDenregistrement":""}]}]},"SubjectOrganizationID":"","SubjectRole":["10^1.2.250.1.213.1.1.5.5"],"PSI_Locale":"1.2.250.1.213.1.3.1.1","otherIds":[{"identifiant":"ANS20210107161422","origine":"EDIT","qualite":1}],"SubjectNameID":"ANS20210107161422","family_name":"NOM"}
+	
+	private static String IDNAT = "SubjectNameID";
+	private static String SUBJECT_REF_PRO = "SubjectRefPro";
+	private static String EXERCICES = "exercices";
+	private static String ACTIVITES = "activities";
+	private static String ID_TECH_STRUCTURE = "identifiantTechniqueDeLaStructure";
+	private static String MODE_EXERCICE = "codeModeExercice";
 	
 	@Test
 	@DisplayName("decodeBase64 X-UserInfo header.")
@@ -43,13 +54,44 @@ public class ParseUserInfo {
 	@DisplayName("en cours ...")
 	public void essaiTest() throws JsonMappingException, JsonProcessingException {
 		
-/*
+
 		String jsonUserInfo =  USERINFO;
 		System.out.println(USERINFO);
 		ObjectMapper mapper = new ObjectMapper();
-		UsefulUserInfo userInfo = mapper.readValue(jsonUserInfo, UsefulUserInfo.class);
-	    System.out.println(userInfo.getGivenName());
-	    System.out.println(userInfo.getFamilyName());
+		JsonNode node = mapper.readTree(jsonUserInfo);  
+		String idNational = node.get(IDNAT).textValue();
+		System.out.println(idNational +" ++");
+		JsonNode nodex = node.get(SUBJECT_REF_PRO);
+		if (nodex.has(EXERCICES)) {
+			node = nodex.get(EXERCICES);
+			if (node.isArray() && node.size()>0) {
+				System.out.println("nb exercices" +node.size());
+				//TODO à revoir si plusieurs exercices....
+				nodex = node.get(0).get(ACTIVITES);
+				int nbActivites = nodex.size();
+				assertEquals(nbActivites, 2);
+				System.out.println("nb activités" +nodex.size());
+				JsonNode activite;
+				for (int act = 0; act < nodex.size() ; act++) {
+					activite = nodex.get(act);
+					System.out.println("-------");
+					System.out.println(activite.get(MODE_EXERCICE).textValue());
+					System.out.println(activite.get(ID_TECH_STRUCTURE).textValue());
+					System.out.println(activite.get("raisonSocialeSite").textValue());
+					
+				}
+				//1ère activité:
+				assertEquals(nodex.get(0).get(MODE_EXERCICE).textValue(), "L");
+//				R102671
+//				CABINET M DOC0042788
+				//2ème activité:
+				assertEquals(nodex.get(1).get(MODE_EXERCICE).textValue(), "S");
+//				F0B0193488
+//				HOPITAL GENERIQUE  FIN VARI
+				
+			}
+		}
+		/*
 	    List<UserInfoSubjectRefProExercices> exercices = userInfo.getSubjectRefPro().getExercices();
 	    System.out.println(exercices.size());
 	    for (UserInfoSubjectRefProExercices userInfoSubjectRefProExercices : exercices) {
@@ -61,11 +103,7 @@ public class ParseUserInfo {
 				System.out.println(activite.getCodeModeExercice());
 				System.out.println(activite.getRaisonSocialeSite());
 			}
-		}
-	*/   
-    
+		} */      
 	}
-	
-	
 }
 

@@ -1,5 +1,6 @@
 package fr.ans.psc.dam.api;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -15,6 +16,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import fr.ans.psc.dam.api.exception.ThrowDamException;
 import fr.ans.psc.dam.model.PsDAMs;
+import fr.ans.psc.dam.util.Helper;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -22,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 public class DamsApiImpl implements DamsApiDelegate {
 
 //	public static final String WITH_GRAVITEE_TRUE = "true";
-	public static final String HEADER_NAME_USERINFO = "X-UserInfo";
+	public static final String HEADER_NAME_USERINFO = "X-BASE64-USERINFO";
 //	public static final String TOKEN_HEADER_PREFIX_BEARER = "Bearer";
 
 //	@Value("${with.gravitee:false}")
@@ -67,14 +69,15 @@ public class DamsApiImpl implements DamsApiDelegate {
 			String modeExercice) {
 		log.debug("APPEL userDAMs ");
 		log.debug("    avec idNational: {}, dontFermes: {}, idTechniqueStructure: {}, modeExercice: {}", idNational, dontFermes,idTechniqueStructure, modeExercice) ;
-		return null;
+		PsDAMs psDAMs = exec.getDAMs( idNational, dontFermes, idTechniqueStructure, modeExercice);
+		return new ResponseEntity<PsDAMs>(psDAMs, HttpStatus.OK);
 	}
 
 	@Override
 	public ResponseEntity<PsDAMs> mydams() {
 		log.debug("APPEL mydams");
-		String jsonBase64UserInfo = extractUserInfoFromHeaders();
-////	
+		String jsonUserInfo = extractUserInfoFromHeaders();
+	
 		return null;
 	}
 
@@ -125,7 +128,14 @@ public class DamsApiImpl implements DamsApiDelegate {
 					"Plusieurs Headers " +  HEADER_NAME_USERINFO +" trouvés dans la requête", HttpStatus.BAD_REQUEST);
 		}
 		
-		log.debug("userinfo base64: {} ", enumJsonUserinfo);
+		log.debug("userinfo base64: {} ", jsonUserInfo);
+		try {
+			jsonUserInfo = Helper.decodeBase64toString(jsonUserInfo);
+		} catch (UnsupportedEncodingException | IllegalArgumentException e) {
+			ThrowDamException.throwExceptionRequestError(
+					"Erreur sur le décodage du UserInfo fourni", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		log.debug("userinfo  ", jsonUserInfo);
 
 		return jsonUserInfo;
 	}
