@@ -14,4 +14,5 @@ public class ConsumedWsConfiguration {
 
 	@Value("${structurereader.url}")
 	private String structureReaderUrl;
+
 }

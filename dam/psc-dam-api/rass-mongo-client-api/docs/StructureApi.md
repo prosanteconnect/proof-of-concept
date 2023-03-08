@@ -4,15 +4,15 @@ All URIs are relative to *http://psc-dam-api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getIds**](StructureApi.md#getIds) | **GET** /ids/get/{structureTechnicalId} | get ids endpoint
+[**getIds**](StructureApi.md#getIds) | **GET** /ids/get/{arrayTechnicalId} | get ids endpoint
 
 <a name="getIds"></a>
 # **getIds**
-> StructureIds getIds(structureTechnicalId)
+> List&lt;StructureIds&gt; getIds(arrayTechnicalId)
 
 get ids endpoint
 
-return an StructureIds Object for the TechnicalStructureId extracted from UserInfo
+Returns a list of StructureIds for the list of TechnicalStructureId (ie TechnicalStructureIds extracted from Prosante Connect UserInfo versus id &#x27;LieuDeTravail&#x27; used on CG database).
 
 ### Example
 ```java
@@ -22,9 +22,9 @@ return an StructureIds Object for the TechnicalStructureId extracted from UserIn
 
 
 StructureApi apiInstance = new StructureApi();
-String structureTechnicalId = "structureTechnicalId_example"; // String | Structure Technical ID
+List<String> arrayTechnicalId = Arrays.asList("arrayTechnicalId_example"); // List<String> | List of Structure Technical ID
 try {
-    StructureIds result = apiInstance.getIds(structureTechnicalId);
+    List<StructureIds> result = apiInstance.getIds(arrayTechnicalId);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling StructureApi#getIds");
@@ -36,11 +36,11 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **structureTechnicalId** | **String**| Structure Technical ID |
+ **arrayTechnicalId** | [**List&lt;String&gt;**](String.md)| List of Structure Technical ID |
 
 ### Return type
 
-[**StructureIds**](StructureIds.md)
+[**List&lt;StructureIds&gt;**](StructureIds.md)
 
 ### Authorization
 

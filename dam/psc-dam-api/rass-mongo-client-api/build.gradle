@@ -30,7 +30,7 @@ dependencies {
 }
 
 group = 'fr.ans.psc.api.client.dam'
-version = '1.0.0'
+version = '2.0.0'
 description = 'client-rass-structure-reader-rest-api'
 
 java.sourceCompatibility = 11

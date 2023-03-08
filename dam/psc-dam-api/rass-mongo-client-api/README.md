@@ -2,7 +2,7 @@
 
 Structure Ids Rest Api
 - API version: 1.0.0
-  - Build date: 2022-02-25T10:58:18.928Z[GMT]
+  - Build date: 2023-03-08T14:01:02.277799777Z[GMT]
 
 Rest Api to get Structure Id for CPS system access
 
@@ -40,7 +40,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>fr.ans.psc.api.client.dam</groupId>
   <artifactId>client-structure-reader-api</artifactId>
-  <version>1.0.0</version>
+  <version>2.0.0</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -50,7 +50,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "fr.ans.psc.api.client.dam:client-structure-reader-api:1.0.0"
+compile "fr.ans.psc.api.client.dam:client-structure-reader-api:2.0.0"
 ```
 
 ### Others
@@ -63,7 +63,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/client-structure-reader-api-1.0.0.jar`
+* `target/client-structure-reader-api-2.0.0.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -84,9 +84,9 @@ public class StructureApiExample {
     public static void main(String[] args) {
         
         StructureApi apiInstance = new StructureApi();
-        String structureTechnicalId = "structureTechnicalId_example"; // String | Structure Technical ID
+        List<String> arrayTechnicalId = Arrays.asList("arrayTechnicalId_example"); // List<String> | List of Structure Technical ID
         try {
-            StructureIds result = apiInstance.getIds(structureTechnicalId);
+            List<StructureIds> result = apiInstance.getIds(arrayTechnicalId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling StructureApi#getIds");
@@ -102,7 +102,7 @@ All URIs are relative to *http://psc-dam-api*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*StructureApi* | [**getIds**](docs/StructureApi.md#getIds) | **GET** /ids/get/{structureTechnicalId} | get ids endpoint
+*StructureApi* | [**getIds**](docs/StructureApi.md#getIds) | **GET** /ids/get/{arrayTechnicalId} | get ids endpoint
 
 ## Documentation for Models
 

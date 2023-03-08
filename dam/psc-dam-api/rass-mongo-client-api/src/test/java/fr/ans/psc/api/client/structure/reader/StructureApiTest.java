@@ -33,17 +33,16 @@ public class StructureApiTest {
     /**
      * get ids endpoint
      *
-     * return an StructureIds Object for the TechnicalStructureId extracted from UserInfo
+     * Returns a list of StructureIds for the list of TechnicalStructureId (ie TechnicalStructureIds extracted from Prosante Connect UserInfo versus id &#x27;LieuDeTravail&#x27; used on CG database).
      *
      * @throws ApiException
      *          if the Api call fails
      */
     @Test
     public void getIdsTest() {
-        String structureTechnicalId = null;
-        StructureIds response = api.getIds(structureTechnicalId);
+        List<String> arrayTechnicalId = null;
+        List<StructureIds> response = api.getIds(arrayTechnicalId);
 
         // TODO: test validations
     }
-    
 }

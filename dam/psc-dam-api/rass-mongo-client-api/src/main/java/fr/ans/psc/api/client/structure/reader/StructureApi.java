@@ -25,7 +25,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-02-25T10:58:18.928Z[GMT]")@Component("fr.ans.psc.api.client.structure.reader.StructureApi")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2023-03-08T14:01:02.277799777Z[GMT]")@Component("fr.ans.psc.api.client.structure.reader.StructureApi")
 public class StructureApi {
     private ApiClient apiClient;
 
@@ -48,38 +48,38 @@ public class StructureApi {
 
     /**
      * get ids endpoint
-     * return an StructureIds Object for the TechnicalStructureId extracted from UserInfo
+     * Returns a list of StructureIds for the list of TechnicalStructureId (ie TechnicalStructureIds extracted from Prosante Connect UserInfo versus id &#x27;LieuDeTravail&#x27; used on CG database).
      * <p><b>200</b> - OK
-     * <p><b>409</b> - Conflict. Pas d&#x27;identifiant structure ou plusieurs identifiants trouvés en base de données
+     * <p><b>410</b> - GONE. Pas d&#x27;identifiant structure ou plusieurs identifiants trouvés en base de données
      * <p><b>503</b> - Base de données inaccessible
-     * @param structureTechnicalId Structure Technical ID (required)
-     * @return StructureIds
+     * @param arrayTechnicalId List of Structure Technical ID (required)
+     * @return List&lt;StructureIds&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public StructureIds getIds(String structureTechnicalId) throws RestClientException {
-        return getIdsWithHttpInfo(structureTechnicalId).getBody();
+    public List<StructureIds> getIds(List<String> arrayTechnicalId) throws RestClientException {
+        return getIdsWithHttpInfo(arrayTechnicalId).getBody();
     }
 
     /**
      * get ids endpoint
-     * return an StructureIds Object for the TechnicalStructureId extracted from UserInfo
+     * Returns a list of StructureIds for the list of TechnicalStructureId (ie TechnicalStructureIds extracted from Prosante Connect UserInfo versus id &#x27;LieuDeTravail&#x27; used on CG database).
      * <p><b>200</b> - OK
-     * <p><b>409</b> - Conflict. Pas d&#x27;identifiant structure ou plusieurs identifiants trouvés en base de données
+     * <p><b>410</b> - GONE. Pas d&#x27;identifiant structure ou plusieurs identifiants trouvés en base de données
      * <p><b>503</b> - Base de données inaccessible
-     * @param structureTechnicalId Structure Technical ID (required)
-     * @return ResponseEntity&lt;StructureIds&gt;
+     * @param arrayTechnicalId List of Structure Technical ID (required)
+     * @return ResponseEntity&lt;List&lt;StructureIds&gt;&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<StructureIds> getIdsWithHttpInfo(String structureTechnicalId) throws RestClientException {
+    public ResponseEntity<List<StructureIds>> getIdsWithHttpInfo(List<String> arrayTechnicalId) throws RestClientException {
         Object postBody = null;
-        // verify the required parameter 'structureTechnicalId' is set
-        if (structureTechnicalId == null) {
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'structureTechnicalId' when calling getIds");
+        // verify the required parameter 'arrayTechnicalId' is set
+        if (arrayTechnicalId == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'arrayTechnicalId' when calling getIds");
         }
         // create path and map variables
         final Map<String, Object> uriVariables = new HashMap<String, Object>();
-        uriVariables.put("structureTechnicalId", structureTechnicalId);
-        String path = UriComponentsBuilder.fromPath("/ids/get/{structureTechnicalId}").buildAndExpand(uriVariables).toUriString();
+        uriVariables.put("arrayTechnicalId", arrayTechnicalId);
+        String path = UriComponentsBuilder.fromPath("/ids/get/{arrayTechnicalId}").buildAndExpand(uriVariables).toUriString();
         
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
@@ -94,7 +94,7 @@ public class StructureApi {
 
         String[] authNames = new String[] {  };
 
-        ParameterizedTypeReference<StructureIds> returnType = new ParameterizedTypeReference<StructureIds>() {};
+        ParameterizedTypeReference<List<StructureIds>> returnType = new ParameterizedTypeReference<List<StructureIds>>() {};
         return apiClient.invokeAPI(path, HttpMethod.GET, queryParams, postBody, headerParams, formParams, accept, contentType, authNames, returnType);
     }
 }

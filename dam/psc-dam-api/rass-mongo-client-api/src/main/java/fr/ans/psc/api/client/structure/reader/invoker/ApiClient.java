@@ -50,7 +50,7 @@ import fr.ans.psc.api.client.structure.reader.invoker.auth.HttpBasicAuth;
 import fr.ans.psc.api.client.structure.reader.invoker.auth.ApiKeyAuth;
 import fr.ans.psc.api.client.structure.reader.invoker.auth.OAuth;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-02-25T10:58:18.928Z[GMT]")@Component("fr.ans.psc.api.client.structure.reader.invoker.ApiClient")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2023-03-08T14:01:02.277799777Z[GMT]")@Component("fr.ans.psc.api.client.structure.reader.invoker.ApiClient")
 public class ApiClient {
     public enum CollectionFormat {
         CSV(","), TSV("\t"), SSV(" "), PIPES("|"), MULTI(null);

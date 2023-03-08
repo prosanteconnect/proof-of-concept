@@ -6,10 +6,10 @@ info:
   contact:
     email: prosanteconnect@esante.gouv.fr
 paths:
-  '/ids/get/{structureTechnicalId}':
+  '/ids/get/{arrayTechnicalId}':
     get:
       summary: get ids endpoint
-      description: return an StructureIds Object for the TechnicalStructureId extracted from UserInfo
+      description: Returns a list of StructureIds for the list of TechnicalStructureId (ie TechnicalStructureIds extracted from Prosante Connect UserInfo versus id 'LieuDeTravail' used on CG database).
       tags:
         - structure
       responses:
@@ -18,27 +18,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StructureIds'
+                type: array
+                items:
+                  $ref: '#/components/schemas/StructureIds'
         '410':
           description: GONE. Pas d'identifiant structure ou plusieurs identifiants trouvés en base de données
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'          
+                $ref: '#/components/schemas/Error'
         '503':
           description: Base de données inaccessible
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'          
+                $ref: '#/components/schemas/Error'
       operationId: get-ids
       parameters:
         - schema:
-            type: string
-          name: structureTechnicalId
+            type: array
+            items:
+              type: string
+          name: arrayTechnicalId
           in: path
           required: true
-          description: Structure Technical ID
+          description: List of Structure Technical ID
 servers:
   - description: POC DAM
     url: 'http://psc-dam-api'

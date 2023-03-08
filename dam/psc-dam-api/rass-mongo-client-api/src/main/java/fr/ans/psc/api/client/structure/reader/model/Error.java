@@ -23,7 +23,7 @@ import java.io.Serializable;
  * Error object returned when signature validation fails
  */
 @Schema(description = "Error object returned when signature validation fails")
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-02-25T10:58:18.928Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2023-03-08T14:01:02.277799777Z[GMT]")
 public class Error implements Serializable{
   private static final long serialVersionUID = 1L;
   @JsonProperty("code")

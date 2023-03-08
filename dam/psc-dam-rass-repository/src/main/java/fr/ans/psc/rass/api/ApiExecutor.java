@@ -1,5 +1,7 @@
 package fr.ans.psc.rass.api;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.ComponentScan;
@@ -19,5 +21,9 @@ public class ApiExecutor {
 
 	public StructureIds getIds(String technicalStructureId) {
 		return repo.findByStructureTechnicalId(technicalStructureId);
+	}
+	
+	public List<StructureIds> getIds(List<String> arrayTechnicalId) {
+		return repo.findByStructureTechnicalIdIn(arrayTechnicalId);
 	}
 }

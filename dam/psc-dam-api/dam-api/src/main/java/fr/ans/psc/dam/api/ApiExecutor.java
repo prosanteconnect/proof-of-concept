@@ -187,9 +187,11 @@ public class ApiExecutor {
 		structureApiClient.setBasePath(wsConf.getStructureReaderUrl());
 		log.debug(" appel Backend IdStructure, wsConf.getStructureReaderUrl {}", wsConf.getStructureReaderUrl());
 		structureReader.setApiClient(structureApiClient);
-		StructureIds structureIds = null;
+		List<StructureIds> structureIds = null;
 		try {
-			structureIds = structureReader.getIds(idTechniqueStructure);
+			 List<String> ids = new ArrayList<String>();
+			 ids.add(idTechniqueStructure);
+			structureIds = structureReader.getIds(ids);
 			log.debug("Appel WS backend lecture de l'IdLieuDeTravail OK!");
 		} catch (Exception e) {
 			switch (e.getClass().getCanonicalName()) {
@@ -208,7 +210,11 @@ public class ApiExecutor {
 					HttpStatus.SERVICE_UNAVAILABLE);
 		}
 
-		return structureIds.getIdentifiantMetier();
+		if (structureIds.size() != 1) {
+			ThrowDamException.throwExceptionRequestError("Erreur sur lecture idLieuDeTravail. Aucun ou plusieurs id metier trouvés pour un identifiant technique de structure",
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return structureIds.get(0).getIdentifiantMetier();
 
 	}
 
