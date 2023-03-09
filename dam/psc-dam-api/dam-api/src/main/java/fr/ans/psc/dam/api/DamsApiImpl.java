@@ -26,12 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DamsApiImpl implements DamsApiDelegate {
 
-//	public static final String WITH_GRAVITEE_TRUE = "true";
 	public static final String HEADER_NAME_USERINFO = "X-BASE64-USERINFO";
-//	public static final String TOKEN_HEADER_PREFIX_BEARER = "Bearer";
-
-//	@Value("${with.gravitee:false}")
-//	private String withGravitee;
 
 	@Autowired
 	ApiExecutor exec;
@@ -40,8 +35,9 @@ public class DamsApiImpl implements DamsApiDelegate {
 	public ResponseEntity<PsDAMs> userdams(String idNational, Boolean dontFermes, String idTechniqueStructure,
 			String modeExercice) {
 		log.debug("APPEL userDAMs ");
-		log.debug("    avec idNational: {}, dontFermes: {}, idTechniqueStructure: {}, modeExercice: {}", idNational, dontFermes,idTechniqueStructure, modeExercice) ;
-		PsDAMs psDAMs = exec.getDAMs( idNational, dontFermes, idTechniqueStructure, modeExercice);
+		log.debug("    avec idNational: {}, dontFermes: {}, idTechniqueStructure: {}, modeExercice: {}", idNational,
+				dontFermes, idTechniqueStructure, modeExercice);
+		PsDAMs psDAMs = exec.getDAMs(idNational, dontFermes, idTechniqueStructure, modeExercice);
 		return new ResponseEntity<PsDAMs>(psDAMs, HttpStatus.OK);
 	}
 
@@ -49,13 +45,14 @@ public class DamsApiImpl implements DamsApiDelegate {
 	public ResponseEntity<PsDAMs> mydams() {
 		log.debug("APPEL mydams");
 		String jsonUserInfo = extractUserInfoFromHeaders();
-		UserActivities user = null;;
+		UserActivities user = null;
+		;
 		try {
 			user = Helper.getUserActivities(jsonUserInfo);
 		} catch (JsonProcessingException e) {
-			log.error("Erreur dans l'extraction des activités du userInfo des Prosante Connect! {} \n {}", e.getMessage(), e.getStackTrace());
-			ThrowDamException.throwExceptionRequestError(
-					"Erreur dans l'extraction des activités du userInfo de Prosante Connect", HttpStatus.BAD_REQUEST);
+			String error = "Erreur dans l'extraction des activités du userInfo des Prosante Connect!";
+			log.error(" {} message {} \n {}", error, e.getMessage(), e.getStackTrace());
+			ThrowDamException.throwExceptionRequestError(error, HttpStatus.BAD_REQUEST);
 		}
 		PsDAMs psDAMs = exec.getMyDAMs(user);
 		return new ResponseEntity<PsDAMs>(psDAMs, HttpStatus.OK);
@@ -73,32 +70,30 @@ public class DamsApiImpl implements DamsApiDelegate {
 		String jsonUserInfo = "";
 		while (enumJsonUserinfo.hasMoreElements()) {
 			jsonUserInfo = enumJsonUserinfo.nextElement();
-				log.debug("userinfo base64: {} ", enumJsonUserinfo);
-				count++;
-			}
-		
-		if ((enumJsonUserinfo == null) || (count == 0) ) {
-			ThrowDamException.throwExceptionRequestError(
-					"Header " +  HEADER_NAME_USERINFO +" non trouvé dans les headers de la requête ", HttpStatus.BAD_REQUEST);
+			log.debug("userinfo base64: {} ", enumJsonUserinfo);
+			count++;
 		}
-		
-		if (count >1) {
+
+		if ((enumJsonUserinfo == null) || (count == 0)) {
 			ThrowDamException.throwExceptionRequestError(
-					"Plusieurs Headers " +  HEADER_NAME_USERINFO +" trouvés dans la requête", HttpStatus.BAD_REQUEST);
+					"Header " + HEADER_NAME_USERINFO + " non trouvé dans les headers de la requête ",
+					HttpStatus.BAD_REQUEST);
 		}
-		
+
+		if (count > 1) {
+			ThrowDamException.throwExceptionRequestError(
+					"Plusieurs Headers " + HEADER_NAME_USERINFO + " trouvés dans la requête", HttpStatus.BAD_REQUEST);
+		}
+
 		log.debug("userinfo base64: {} ", jsonUserInfo);
 		try {
 			jsonUserInfo = Helper.decodeBase64toString(jsonUserInfo);
 		} catch (UnsupportedEncodingException | IllegalArgumentException e) {
-			ThrowDamException.throwExceptionRequestError(
-					"Erreur sur le décodage du UserInfo fourni", HttpStatus.INTERNAL_SERVER_ERROR);
+			ThrowDamException.throwExceptionRequestError("Erreur sur le décodage du UserInfo fourni",
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		log.debug("userinfo  ", jsonUserInfo);
-
 		return jsonUserInfo;
 	}
-	
 
 }
- 

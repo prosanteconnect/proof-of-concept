@@ -1,6 +1,8 @@
 package fr.ans.psc.dam.api;
 
 import java.net.URLEncoder;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +36,8 @@ public class ApiExecutor {
 	GetFullDamsApi damReader = new GetFullDamsApi();
 
 	StructureApi structureReader = new StructureApi();
+	
+	public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
 	public PsDAMs getDAMs(String idNational, Boolean dontFermes, String idTechniqueStructure,
 			String modeExercice) {
@@ -47,7 +51,15 @@ public class ApiExecutor {
 	public PsDAMs getMyDAMs(UserActivities user) {
 		String idNat = user.getIdNat();
 		SimpleDams simpleDAMs = get_dams(idNat);
-		log.debug("Lecture des 'myDAMS' effectuée, simpleDAMs.size: {}", simpleDAMs.size());
+		log.debug("Lecture des 'myDAMS' effectuée, simpleDAMs.size: {}", simpleDAMs.size());		
+		
+		//Filtre: éliminer les DAMs fermés
+		simpleDAMs = filterActiveDAM(simpleDAMs);
+		
+		//TODO Convertir IdTEchniqueSTructure en IdLieuDeTravail Map
+		//SimpleDams validDAMs = null;
+		//TODO Eliminer les idTechnique non trouvés  ou erreur?
+		//TODO Filtre sur les couples (idStureructure, mode exercices)
 		PsDAMs psDAMs = convertSimpleDAMsToPsDAMs(idNat, simpleDAMs);
 		return psDAMs;
 	}
@@ -60,7 +72,6 @@ public class ApiExecutor {
 
 		// filtre sur les DAMs fermés depuis moins de 3 mois
 		if (!dontFermes) {
-			// simpleDAMs = filterActiveDAM(simpleDAMs);
 			simpleDAMs = filterActiveDAM(simpleDAMs);
 		}
 
@@ -84,11 +95,14 @@ public class ApiExecutor {
 	}
 
 	public SimpleDams filterActiveDAM(SimpleDams simpleDAMs) {
-		log.debug("filtre sur la date de fermeture IN inital size: {}", simpleDAMs.size());
+		LocalDate today = LocalDate.now();
+		log.debug("filtre sur la date de fermeture IN inital size: {}, nous sommes le {} (jj-mm-aaaa)", simpleDAMs.size(), today.format(formatter));
 		SimpleDams filteredsimpleDAMs = new SimpleDams();
 		simpleDAMs.forEach(simpleDAM -> {
 			if (simpleDAM.getDateFinValidite() == null || simpleDAM.getDateFinValidite().isBlank()
-					|| simpleDAM.getDateFinValidite().isEmpty()) {
+					|| simpleDAM.getDateFinValidite().isEmpty() 
+					||  LocalDate.parse(simpleDAM.getDateFinValidite(),formatter).isAfter(today)
+							) {
 				filteredsimpleDAMs.add(simpleDAM);
 			}
 		});
