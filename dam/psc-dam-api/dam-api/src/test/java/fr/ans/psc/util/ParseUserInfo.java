@@ -1,26 +1,17 @@
 package fr.ans.psc.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import fr.ans.psc.dam.model.UsefulUserInfo;
-import fr.ans.psc.dam.model.UserInfoSubjectRefProActivities;
-import fr.ans.psc.dam.model.UserInfoSubjectRefProExercices;
+import fr.ans.psc.dam.model.UserActivities;
 import fr.ans.psc.dam.util.Helper;
-import fr.ans.psc.dam.util.JWTFields;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -34,12 +25,7 @@ public class ParseUserInfo {
 	//userinfo avec 5 activités
 	//{"Secteur_Activite":"SA07^1.2.250.1.71.4.2.4","sub":"f:550dc1c8-d97b-4b1e-ac8c-8eb4471cf9dd:ANS20210107161422","email_verified":false,"SubjectOrganization":"CAB MED BIS TOUBIB0023550","Mode_Acces_Raison":"","preferred_username":"ANS20210107161422","given_name":"Paul","Acces_Regulation_Medicale":"FAUX","UITVersion":"1.0","Palier_Authentification":"APPPRIP3^1.2.250.1.213.1.5.1.1.1","SubjectRefPro":{"codeCivilite":"M","exercices":[{"codeProfession":"10","codeCategorieProfessionnelle":"C","codeCiviliteDexercice":"M","nomDexercice":"Docteur OIDC","prenomDexercice":"Paul","codeTypeSavoirFaire":"S","codeSavoirFaire":"SM54","activities":[{"codeModeExercice":"L","codeSecteurDactivite":"SA07","codeSectionPharmacien":"","codeRole":"","codeGenreActivite":"GENR01","numeroSiretSite":"","numeroSirenSite":"","numeroFinessSite":"","numeroFinessetablissementJuridique":"","identifiantTechniqueDeLaStructure":"","raisonSocialeSite":"CAB MED BIS TOUBIB0023550","enseigneCommercialeSite":"","complementDestinataire":"","complementPointGeographique":"","numeroVoie":"","indiceRepetitionVoie":"","codeTypeDeVoie":"R","libelleVoie":"PARIS","mentionDistribution":"","bureauCedex":"","codePostal":"75009","codeCommune":"75109","codePays":"","telephone":"","telephone2":"","telecopie":"","adresseEMail":"","codeDepartement":"75","ancienIdentifiantDeLaStructure":"","autoriteDenregistrement":""},{"codeModeExercice":"L","codeSecteurDactivite":"SA07","codeSectionPharmacien":"","codeRole":"","codeGenreActivite":"GENR01","numeroSiretSite":"","numeroSirenSite":"","numeroFinessSite":"","numeroFinessetablissementJuridique":"","identifiantTechniqueDeLaStructure":"","raisonSocialeSite":"CABINET MEDICAL0023550","enseigneCommercialeSite":"","complementDestinataire":"","complementPointGeographique":"","numeroVoie":"2","indiceRepetitionVoie":"","codeTypeDeVoie":"R","libelleVoie":"LIBERTA","mentionDistribution":"","bureauCedex":"","codePostal":"75009","codeCommune":"75109","codePays":"","telephone":"","telephone2":"","telecopie":"","adresseEMail":"","codeDepartement":"75","ancienIdentifiantDeLaStructure":"","autoriteDenregistrement":""},{"codeModeExercice":"S","codeSecteurDactivite":"SA01","codeSectionPharmacien":"","codeRole":"","codeGenreActivite":"GENR01","numeroSiretSite":"","numeroSirenSite":"","numeroFinessSite":"","numeroFinessetablissementJuridique":"","identifiantTechniqueDeLaStructure":"","raisonSocialeSite":"HOPITAL GENERIQUE","enseigneCommercialeSite":"","complementDestinataire":"","complementPointGeographique":"","numeroVoie":"20","indiceRepetitionVoie":"","codeTypeDeVoie":"R","libelleVoie":"DE PARIS","mentionDistribution":"","bureauCedex":"","codePostal":"75020","codeCommune":"75120","codePays":"","telephone":"","telephone2":"","telecopie":"","adresseEMail":"","codeDepartement":"75","ancienIdentifiantDeLaStructure":"","autoriteDenregistrement":""},{"codeModeExercice":"S","codeSecteurDactivite":"SA43","codeSectionPharmacien":"","codeRole":"","codeGenreActivite":"GENR01","numeroSiretSite":"00000000016972","numeroSirenSite":"000000000","numeroFinessSite":"","numeroFinessetablissementJuridique":"","identifiantTechniqueDeLaStructure":"","raisonSocialeSite":"CONSEIL DES ORDRES","enseigneCommercialeSite":"","complementDestinataire":"","complementPointGeographique":"","numeroVoie":"28","indiceRepetitionVoie":"","codeTypeDeVoie":"R","libelleVoie":"DES INVALIDES","mentionDistribution":"","bureauCedex":"","codePostal":"75009","codeCommune":"75109","codePays":"","telephone":"","telephone2":"","telecopie":"","adresseEMail":"","codeDepartement":"75","ancienIdentifiantDeLaStructure":"","autoriteDenregistrement":""},{"codeModeExercice":"S","codeSecteurDactivite":"SA43","codeSectionPharmacien":"","codeRole":"","codeGenreActivite":"GENR01","numeroSiretSite":"00000000079608","numeroSirenSite":"000000000","numeroFinessSite":"","numeroFinessetablissementJuridique":"","identifiantTechniqueDeLaStructure":"","raisonSocialeSite":"ORGANISME ND7960","enseigneCommercialeSite":"","complementDestinataire":"","complementPointGeographique":"","numeroVoie":"2","indiceRepetitionVoie":"","codeTypeDeVoie":"R","libelleVoie":"MOULIN VERT","mentionDistribution":"","bureauCedex":"","codePostal":"75009","codeCommune":"75109","codePays":"","telephone":"","telephone2":"","telecopie":"","adresseEMail":"","codeDepartement":"75","ancienIdentifiantDeLaStructure":"","autoriteDenregistrement":""}]}]},"SubjectOrganizationID":"","SubjectRole":["10^1.2.250.1.213.1.1.5.5"],"PSI_Locale":"1.2.250.1.213.1.3.1.1","otherIds":[{"identifiant":"ANS20210107161422","origine":"EDIT","qualite":1}],"SubjectNameID":"ANS20210107161422","family_name":"NOM"}
 	
-	private static String IDNAT = "SubjectNameID";
-	private static String SUBJECT_REF_PRO = "SubjectRefPro";
-	private static String EXERCICES = "exercices";
-	private static String ACTIVITES = "activities";
-	private static String ID_TECH_STRUCTURE = "identifiantTechniqueDeLaStructure";
-	private static String MODE_EXERCICE = "codeModeExercice";
+	
 	
 	@Test
 	@DisplayName("decodeBase64 X-UserInfo header.")
@@ -51,59 +37,20 @@ public class ParseUserInfo {
 		
 	
 	@Test
-	@DisplayName("en cours ...")
-	public void essaiTest() throws JsonMappingException, JsonProcessingException {
+	@DisplayName("Extraction des activités du UserInfo")
+	public void helperExtractionActivitesTest() throws JsonMappingException, JsonProcessingException {
 		
-
 		String jsonUserInfo =  USERINFO;
-		System.out.println(USERINFO);
-		ObjectMapper mapper = new ObjectMapper();
-		JsonNode node = mapper.readTree(jsonUserInfo);  
-		String idNational = node.get(IDNAT).textValue();
-		System.out.println(idNational +" ++");
-		JsonNode nodex = node.get(SUBJECT_REF_PRO);
-		if (nodex.has(EXERCICES)) {
-			node = nodex.get(EXERCICES);
-			if (node.isArray() && node.size()>0) {
-				System.out.println("nb exercices" +node.size());
-				//TODO à revoir si plusieurs exercices....
-				nodex = node.get(0).get(ACTIVITES);
-				int nbActivites = nodex.size();
-				assertEquals(nbActivites, 2);
-				System.out.println("nb activités" +nodex.size());
-				JsonNode activite;
-				for (int act = 0; act < nodex.size() ; act++) {
-					activite = nodex.get(act);
-					System.out.println("-------");
-					System.out.println(activite.get(MODE_EXERCICE).textValue());
-					System.out.println(activite.get(ID_TECH_STRUCTURE).textValue());
-					System.out.println(activite.get("raisonSocialeSite").textValue());
-					
-				}
-				//1ère activité:
-				assertEquals(nodex.get(0).get(MODE_EXERCICE).textValue(), "L");
-//				R102671
-//				CABINET M DOC0042788
-				//2ème activité:
-				assertEquals(nodex.get(1).get(MODE_EXERCICE).textValue(), "S");
-//				F0B0193488
-//				HOPITAL GENERIQUE  FIN VARI
-				
-			}
+		
+		UserActivities user = Helper.getUserActivities(jsonUserInfo);
+		assertEquals(user.getIdNat(), "899700427885");
+		assertEquals(user.getActivites().size(), "2");
+		assertEquals(user.getActivites().get(0).getIdentifiantLieuDeTravail(), "R102671");
+		assertEquals(user.getActivites().get(0).getCodeModeExercice(), "L");
+		assertEquals(user.getActivites().get(0).getRaisonSocialeSite(), "CABINET M DOC0042788");
+		assertEquals(user.getActivites().get(0).getIdentifiantLieuDeTravail(), "F0B0193488");
+		assertEquals(user.getActivites().get(0).getCodeModeExercice(), "S");
+		assertEquals(user.getActivites().get(0).getRaisonSocialeSite(), "HOPITAL GENERIQUE  FIN VARI");			
 		}
-		/*
-	    List<UserInfoSubjectRefProExercices> exercices = userInfo.getSubjectRefPro().getExercices();
-	    System.out.println(exercices.size());
-	    for (UserInfoSubjectRefProExercices userInfoSubjectRefProExercices : exercices) {
-	    	System.err.println(userInfoSubjectRefProExercices.getNomDexercice());
-	    	List<UserInfoSubjectRefProActivities> activites = userInfoSubjectRefProExercices.getActivities();
-	    	for (UserInfoSubjectRefProActivities activite : activites) {
-	    		System.out.println("*******************");
-				System.out.println(activite.getAncienIdentifiantDeLaStructure());
-				System.out.println(activite.getCodeModeExercice());
-				System.out.println(activite.getRaisonSocialeSite());
-			}
-		} */      
-	}
 }
 

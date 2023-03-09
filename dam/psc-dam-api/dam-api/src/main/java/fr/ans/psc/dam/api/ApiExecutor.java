@@ -17,6 +17,7 @@ import fr.ans.psc.dam.api.called.ConsumedWsConfiguration;
 import fr.ans.psc.dam.api.exception.ThrowDamException;
 import fr.ans.psc.dam.model.PsDAMs;
 import fr.ans.psc.dam.model.RichDam;
+import fr.ans.psc.dam.model.UserActivities;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -42,12 +43,20 @@ public class ApiExecutor {
 		
 	}
 
+	
+	public PsDAMs getMyDAMs(UserActivities user) {
+		String idNat = user.getIdNat();
+		SimpleDams simpleDAMs = get_dams(idNat);
+		log.debug("Lecture des 'myDAMS' effectuée, simpleDAMs.size: {}", simpleDAMs.size());
+		PsDAMs psDAMs = convertSimpleDAMsToPsDAMs(idNat, simpleDAMs);
+		return psDAMs;
+	}
 	// *************************************************************************************
 
 	public PsDAMs get_PsDAMs(String NationalID, Boolean dontFermes, String idTechniqueStructure, String modeExercice) {
 
 		SimpleDams simpleDAMs = get_dams(NationalID);
-		log.debug("Lecture des DAMS effectués, simpleDAMs.size: {}", simpleDAMs.size());
+		log.debug("Lecture des 'userDAMS' effectuée, simpleDAMs.size: {}", simpleDAMs.size());
 
 		// filtre sur les DAMs fermés depuis moins de 3 mois
 		if (!dontFermes) {
