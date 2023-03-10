@@ -81,7 +81,7 @@ EOH
         change_mode = "restart"
         data = <<EOF
 spring.application.name=psc-remote-cache-api
-server.servlet.contextPath=/remote-cache/api
+server.servlet.contextPath=/remote-cache-api
 logging.level.org.springframework=ERROR
 logging.level.fr.ans.psc.remote.cache.api.*=DEBUG
 
@@ -102,13 +102,13 @@ EOF
       }
 
       service {
-       # name = "$\u007BNOMAD_NAMESPACE\u007D-$\u007BNOMAD_JOB_NAME\u007D"
+       # name = "$\u007BNOMAD_JOB_NAME\u007D"
 	    name = "remote-cache-api"
-        tags = ["urlprefix-/remote-cache/api/"]
+        tags = ["urlprefix-/remote-cache-api/"]
         port = "http"
         check {
           type = "http"
-          path = "/remote-cache/api/check"
+          path = "/api/check"
           port = "http"
           interval = "30s"
           timeout = "2s"

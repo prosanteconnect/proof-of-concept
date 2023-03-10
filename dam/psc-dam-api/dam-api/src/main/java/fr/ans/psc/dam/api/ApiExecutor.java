@@ -56,10 +56,6 @@ public class ApiExecutor {
 		//Filtre: éliminer les DAMs fermés
 		simpleDAMs = filterActiveDAM(simpleDAMs);
 		
-		//TODO Convertir IdTEchniqueSTructure en IdLieuDeTravail Map
-		//SimpleDams validDAMs = null;
-		//TODO Eliminer les idTechnique non trouvés  ou erreur?
-		//TODO Filtre sur les couples (idStureructure, mode exercices)
 		PsDAMs psDAMs = convertSimpleDAMsToPsDAMs(idNat, simpleDAMs);
 		return psDAMs;
 	}
@@ -75,11 +71,12 @@ public class ApiExecutor {
 			simpleDAMs = filterActiveDAM(simpleDAMs);
 		}
 
+		//filtre sur la structure
 		if (idTechniqueStructure != null) {
-			// simpleDAMs = filterIdTechniqueStructure(simpleDAMs, idTechniqueStructure);
 			simpleDAMs = filterIdTechniqueStructure(simpleDAMs, idTechniqueStructure);
 		}
 
+		//filtre mode activité: libérale / salariée
 		if (modeExercice != null) {
 			if (modeExercice.equals("0") || modeExercice.equals("1")) {
 				simpleDAMs = filterModeExercice(simpleDAMs, modeExercice);
@@ -89,6 +86,7 @@ public class ApiExecutor {
 			}
 		}
 
+		// ajout des libéllés
 		PsDAMs psDAMs = convertSimpleDAMsToPsDAMs(NationalID, simpleDAMs);
 		log.debug("fin conversion vers PsDAMs");
 		return psDAMs;
@@ -238,7 +236,6 @@ public class ApiExecutor {
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return structureIds.get(0).getIdentifiantMetier();
-
 	}
 
 }

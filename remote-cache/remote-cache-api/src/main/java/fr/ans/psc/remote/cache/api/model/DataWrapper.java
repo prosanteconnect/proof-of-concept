@@ -3,8 +3,6 @@ package fr.ans.psc.remote.cache.api.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 
-// default TimeUnit is seconds
-//@RedisHash(value = "DataWrapper", timeToLive = 900) 
 public class DataWrapper {
     @JsonProperty("key")
     private String key;
@@ -12,8 +10,6 @@ public class DataWrapper {
     @JsonProperty(value = "schemaId", required = true)
     private String schemaId;
 
-    // must be static because Jackson ObjectNode doesn't have default constructor,
-    // which leads to failures with SpringData
     @JsonProperty(value = "bag", required = true)
     private JsonNode bag;
     

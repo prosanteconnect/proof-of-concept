@@ -1,24 +1,22 @@
 package fr.ans.psc.remote.cache.api.repository;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
-import fr.ans.psc.remote.cache.api.RemoteCacheApiApplication;
-import fr.ans.psc.remote.cache.api.TestRedisConfiguration;
-import fr.ans.psc.remote.cache.api.model.DataWrapper;
-import fr.ans.psc.remote.cache.api.repository.PscContextRepository;
-
-import org.junit.jupiter.api.Disabled;
+import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.redis.AutoConfigureDataRedis;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jayway.jsonpath.internal.filter.ValueNodes.JsonNode;
 
-import static org.junit.jupiter.api.Assertions.*;
+import fr.ans.psc.remote.cache.api.RemoteCacheApiApplication;
+import fr.ans.psc.remote.cache.api.TestRedisConfiguration;
+import fr.ans.psc.remote.cache.api.model.DataWrapper;
+import fr.ans.psc.remote.cache.api.model.RedisDataWrapper;
 
 @SpringBootTest(classes = TestRedisConfiguration.class)
 @AutoConfigureDataRedis
@@ -41,7 +39,7 @@ public class PsContextRepositoryTest {
 //        assertEquals(pscContext.getBag(), savedPscContext.getBag());
 //        assertEquals("value", savedPscContext.getBag().get("key").asText());
 //
-//        DataWrapper foundCtx = ctxRepository.findById("1").orElseThrow();
+//        RedisDataWrapper foundCtx = ctxRepository.findById("1").orElseThrow();
 //        assertEquals("value", foundCtx.getBag().get("key").asText());
 //    }
 

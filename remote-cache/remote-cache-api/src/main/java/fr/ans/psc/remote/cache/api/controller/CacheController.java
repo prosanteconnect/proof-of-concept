@@ -43,8 +43,6 @@ public class CacheController {
     private static String CACHE_KEY_HEADER= "X-CACHE-KEY";
     private static Long SHORT_TIME_TO_LIVE = 900L; // en second (900s = 15 mn)
     private static Long LONG_TIME_TO_LIVE = 14400L; //(14400s = 4h)
-//    private static Long SHORT_TIME_TO_LIVE = 300L; // 5 mn 
-//    private static Long LONG_TIME_TO_LIVE = 900L; // 15mn 
     private static String SCHEMA_PSC_DATA = "psc-data"; 
     
     @GetMapping()
@@ -72,11 +70,8 @@ public class CacheController {
             }
           
             String jsonBag = mapper.writeValueAsString(wrapper.getBag());
-         //   String tmp = wrapper.getBag().
-            log.debug("PUT request for TTL : {}, schemaID: {}, key: {}; jsonBag {}", timeToLIve, schemaId, key);
-            
+            log.debug("PUT request for TTL : {}, schemaID: {}, key: {}; jsonBag {}", timeToLIve, schemaId, key, jsonBag);            
             RedisDataWrapper toStore = new RedisDataWrapper(key, wrapper.getSchemaId(), jsonBag,timeToLIve );
-       //     toStore.setKey(key);
             DataWrapper savedContext = cacheService.putInCache(toStore);
             return new ResponseEntity<>(savedContext, HttpStatus.OK);
         } catch (PscContextSharingException e) {

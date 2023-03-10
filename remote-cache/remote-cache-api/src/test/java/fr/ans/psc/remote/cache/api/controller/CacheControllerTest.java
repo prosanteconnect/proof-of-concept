@@ -84,14 +84,6 @@ public class CacheControllerTest {
                     .usingFilesUnderClasspath("wiremock/api"))
             .configureStaticDsl(true).build();
 
-//    @DynamicPropertySource
-//    static void registerPgProperties(DynamicPropertyRegistry propertiesRegistry) {
-//        propertiesRegistry.add("psc.url.introspection", () -> httpMockServer.baseUrl() + "/token/introspect");
-//        propertiesRegistry.add("psc.url.userinfo", () -> httpMockServer.baseUrl() + "/userinfo");
-//        propertiesRegistry.add("psc.clientID", () -> "client-id");
-//        propertiesRegistry.add("psc.clientSecret", () -> "client-secret");
-//    }
-
     @BeforeEach
     public void setUp(WebApplicationContext context) {
         // LOG APPENDER
@@ -159,28 +151,4 @@ public class CacheControllerTest {
                 .andExpect(content().json(responseContentJson));
     }
 
-//    @Test
-//    @DisplayName("get DataWrapper OK")
-//    public void getPscContextTest() throws Exception {
-//        // mock ProSanteConnect calls
-//        String userInfosJson = Files.readString(new ClassPathResource("userInfos.json").getFile().toPath());
-//        httpMockServer.stubFor(WireMock.post("/token/introspect").willReturn(aResponse().withStatu"s(200).withBody("{\"active\":\"true\"}")));
-//        httpMockServer.stubFor(WireMock.get("/userinfo").willReturn(aResponse().withStatus(200).withBody(userInfosJson)));
-//
-//        // populate Redis
-//        JsonNode bag = mapper.readTree("{\"ps\":{\"nationalId\":\"899700218896\"}}");
-//        DataWrapper storedContext = new DataWrapper("899700218896", "patient-info", bag);
-//
-//        pscContextRepository.save(storedContext);
-//        String responseContentJson = mapper.writeValueAsString(storedContext);
-//
-//        // get request
-//        ResultActions getRequest = mockMvc.perform(get("/share")
-//                .header(ACCEPT_HEADER, APPLICATION_JSON)
-//                .header(CACHE_KEY_HEADER, "TODO ...")
-//                .contentType(APPLICATION_JSON)
-//                .characterEncoding(StandardCharsets.UTF_8))
-//                .andExpect(status().is(200))
-//                .andExpect(content().json(responseContentJson));
-//    }
 }

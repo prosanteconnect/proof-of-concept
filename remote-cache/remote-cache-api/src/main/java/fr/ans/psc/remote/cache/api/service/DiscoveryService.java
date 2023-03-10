@@ -1,22 +1,19 @@
 package fr.ans.psc.remote.cache.api.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.networknt.schema.JsonSchema;
-import com.networknt.schema.JsonSchemaFactory;
-import com.networknt.schema.SpecVersion;
-
-import fr.ans.psc.remote.cache.api.exception.PscSchemaException;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import fr.ans.psc.remote.cache.api.exception.PscSchemaException;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
