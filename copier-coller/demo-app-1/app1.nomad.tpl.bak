@@ -53,7 +53,7 @@ EOH
         data = <<EOF
 psc.context.sharing.api.url=http://{{ range service "remote-cache-api"}}{{ .Address }}:{{ .Port }}{{ end }}/remote-cache-api/cache
 
-{{ with secret "copier-coller/app" }}
+{{ with secret "copier-coller" }}
 spring.security.oauth2.client.registration.prosanteconnect.clientId={{ .Data.data.psc_client_id}}
 spring.security.oauth2.client.registration.prosanteconnect.clientSecret={{ .Data.data.psc_client_secret}}
 spring.security.oauth2.client.registration.prosanteconnect.provider=prosanteconnect

@@ -41,7 +41,7 @@ job "copier-coller-demo-app-2" {
         destination = "local/file.env"
         env = true
         data = <<EOH
-PUBLIC_HOSTNAME={{ with secret "poc/copier-coller" }}{{ .Data.data.demo_app_2_public_hostname }}{{ end }}
+PUBLIC_HOSTNAME={{ with secret "copier-coller/app" }}{{ .Data.data.demo_app_2_public_hostname }}{{ end }}
 JAVA_TOOL_OPTIONS="-Xms256m -Xmx1g -XX:+UseG1GC -Dspring.config.location=/secrets/application.properties -Dlogging.level.fr.ans.psc=${log_level}"
 EOH
       }
@@ -51,9 +51,9 @@ EOH
         destination = "secrets/application.properties"
         change_mode = "restart"
         data = <<EOF
-psc.context.sharing.api.url=http://{{ range service "${nomad_namespace}-copier-coller-api"}}{{ .Address }}:{{ .Port }}{{ end }}/psc-copier-coller/api/share
+psc.context.sharing.api.url=http://{{ range service "remote-cache-api"}}{{ .Address }}:{{ .Port }}{{ end }}/remote-cache-api/cache
 
-{{ with secret "poc/copier-coller" }}
+{{ with secret "copier-coller/app" }}
 spring.security.oauth2.client.registration.prosanteconnect.clientId={{ .Data.data.psc_client_id}}
 spring.security.oauth2.client.registration.prosanteconnect.clientSecret={{ .Data.data.psc_client_secret}}
 spring.security.oauth2.client.registration.prosanteconnect.provider=prosanteconnect

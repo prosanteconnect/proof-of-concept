@@ -1,6 +1,7 @@
 package fr.ans.psc.remote.cache.api.repository;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
@@ -11,11 +12,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jayway.jsonpath.internal.filter.ValueNodes.JsonNode;
 
 import fr.ans.psc.remote.cache.api.RemoteCacheApiApplication;
 import fr.ans.psc.remote.cache.api.TestRedisConfiguration;
-import fr.ans.psc.remote.cache.api.model.DataWrapper;
 import fr.ans.psc.remote.cache.api.model.RedisDataWrapper;
 
 @SpringBootTest(classes = TestRedisConfiguration.class)
@@ -28,37 +27,22 @@ public class PsContextRepositoryTest {
 
     private ObjectMapper mapper = new ObjectMapper();
 
-//    @Test
-//    @DisplayName("should save to Redis")
-//    public void shouldSavePscContext_toRedis() throws JsonProcessingException {
-//        JsonNode bag = mapper.readTree("{\"key\":\"value\"}");
-//        final DataWrapper pscContext = new DataWrapper("1", "schemaId", bag);
-//        final DataWrapper savedPscContext = ctxRepository.save(pscContext);
-//
-//        assertNotNull(savedPscContext);
-//        assertEquals(pscContext.getBag(), savedPscContext.getBag());
-//        assertEquals("value", savedPscContext.getBag().get("key").asText());
-//
-//        RedisDataWrapper foundCtx = ctxRepository.findById("1").orElseThrow();
-//        assertEquals("value", foundCtx.getBag().get("key").asText());
-//    }
+    @Test
+    @DisplayName("should save to Redis")
+    public void shouldSavePscContext_toRedis()  {
+        //JsonNode bag = mapper.readTree("{\"key\":\"value\"}");
+        String bag = "{\"key\":\"value\"}";
+        final RedisDataWrapper pscContext = new RedisDataWrapper("1", "schemaId", bag, 900L);
+        final RedisDataWrapper savedPscContext = ctxRepository.save(pscContext);
 
-//    @Test
-//    @DisplayName("should update context")
-//    public void shouldReplacePscContext() throws JsonProcessingException {
-//        JsonNode bag1 = mapper.readTree("{\"version\":\"1\"}");
-//        DataWrapper firstContext = new DataWrapper("1", "schemaName", bag1);
-//        DataWrapper firstSaved = ctxRepository.save(firstContext);
-//
-//        JsonNode bag2 = mapper.readTree("{\"version\":\"2\"}");
-//        DataWrapper secondContext = new DataWrapper("1", "schema", bag2);
-//        DataWrapper secondSaved = ctxRepository.save(secondContext);
-//
-//        assertNotEquals(firstSaved, secondSaved);
-////        assertNotEquals(firstSaved.getBag(), secondSaved.getBag());
-//        assertEquals("2", secondSaved.getBag().get("version").asText());
-//        assertEquals("2", ctxRepository.findById("1").orElseThrow().getBag().get("version").asText());
-//    }
+        assertNotNull(savedPscContext);
+        assertEquals(pscContext.getBag(), savedPscContext.getBag());
+        assertEquals("value", savedPscContext.getBag());
+
+        RedisDataWrapper foundCtx = ctxRepository.findById("1").orElseThrow();
+        assertEquals("value", foundCtx.getBag());
+    }
+
 
     // this test should only be enabled manually :
     // Spring Data Redis sets TimeToLive via @RedisHash annotation of model class
