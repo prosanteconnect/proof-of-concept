@@ -4,7 +4,7 @@ job "copier-coller-demo-app-2" {
   namespace = "copier-coller"
 
   vault {
-    policies = ["poc-policy"]
+    policies = ["copier-coller"]
     change_mode = "restart"
   }
 
