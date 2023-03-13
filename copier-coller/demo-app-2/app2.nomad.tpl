@@ -1,7 +1,7 @@
 job "copier-coller-demo-app-2" {
   datacenters = ["${datacenter}"]
   type = "service"
-  namespace = "${nomad_namespace}"
+  namespace = "copier-coller"
 
   vault {
     policies = ["poc-policy"]
